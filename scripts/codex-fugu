@@ -1,0 +1,367 @@
+#!/usr/bin/env bash
+set -uo pipefail
+
+CODEX_HOME="${CODEX_HOME:-$HOME/.codex}"
+CODEX_INSTALL_DIR="${CODEX_INSTALL_DIR:-$HOME/.local/bin}"
+export CODEX_HOME CODEX_INSTALL_DIR
+STATE_DIR="$CODEX_HOME/.fugu"
+STATE_FILE="$STATE_DIR/state"
+DECISIONS_FILE="$STATE_DIR/decisions"
+LASTCHECK_FILE="$STATE_DIR/last_check"
+LOCK_FILE="$STATE_DIR/.lock"
+THROTTLE_SECS="${CODEX_FUGU_CHECK_INTERVAL:-86400}"
+
+DO_STATUS=0; DO_RECHECK=0; DO_CHECK=0; DO_NO_UPDATE=0; DO_SET_KEY=0
+CODEX_ARGS=()
+
+REPO_DIR=""; BUNDLE=""; DEPLOYED_TARGET=""; BRANCH="main"
+INSTALLED=""; REAL_CODEX=""
+MISMATCH=0; UPDATE=0; REMOTE_TARGET=""; REMOTE_REF=""
+
+if [ -t 2 ]; then _Y=$'\033[33m'; _G=$'\033[32m'; _D=$'\033[2m'; _N=$'\033[0m'; else _Y=""; _G=""; _D=""; _N=""; fi
+fug_info() { printf '%s[fugu]%s %s\n' "$_D" "$_N" "$*" >&2; }
+fug_warn() { printf '%s[fugu]%s %s\n' "$_Y" "$_N" "$*" >&2; }
+fug_ok()   { printf '%s[fugu]%s %s\n' "$_G" "$_N" "$*" >&2; }
+
+st_get() { [ -f "$STATE_FILE" ] || return 0; sed -n "s/^$1=//p" "$STATE_FILE" | tail -n1; }
+
+dec_has() { [ -f "$DECISIONS_FILE" ] && grep -qxF -- "$*" "$DECISIONS_FILE"; }
+dec_add() {
+  mkdir -p "$STATE_DIR" 2>/dev/null; chmod 700 "$STATE_DIR" 2>/dev/null || true
+  if ! grep -qxF -- "$*" "$DECISIONS_FILE" 2>/dev/null; then printf '%s\n' "$*" >> "$DECISIONS_FILE"; fi
+  chmod 600 "$DECISIONS_FILE" 2>/dev/null || true
+}
+
+throttle_elapsed() {
+  [ "$DO_CHECK" = 1 ] && return 0
+  [ -f "$LASTCHECK_FILE" ] || return 0
+  local last now; last="$(cat "$LASTCHECK_FILE" 2>/dev/null || echo 0)"; now="$(date +%s 2>/dev/null || echo 0)"
+  case "$last" in ''|*[!0-9]*) return 0 ;; esac
+  [ "$(( now - last ))" -ge "$THROTTLE_SECS" ]
+}
+mark_checked() {
+  mkdir -p "$STATE_DIR" 2>/dev/null; chmod 700 "$STATE_DIR" 2>/dev/null || true
+  date +%s > "$LASTCHECK_FILE" 2>/dev/null || true
+}
+last_check_human() {
+  [ -f "$LASTCHECK_FILE" ] || { printf 'never'; return 0; }
+  local last now; last="$(cat "$LASTCHECK_FILE" 2>/dev/null || echo 0)"; now="$(date +%s 2>/dev/null || echo 0)"
+  case "$last" in ''|*[!0-9]*) printf 'never'; return 0 ;; esac
+  printf '%dh ago' "$(( (now - last) / 3600 ))"
+}
+
+codex_version_of() {
+  "$1" --version 2>/dev/null | grep -oE 'codex-cli[[:space:]]+[0-9][0-9.]*' | head -n1 | awk '{print $2}'
+}
+ver_gt() { [ "$1" != "$2" ] && [ "$(printf '%s\n%s\n' "$1" "$2" | sort -V | tail -n1)" = "$1" ]; }
+
+case "$0" in
+  */*) SELF="$(cd "$(dirname "$0")" 2>/dev/null && pwd)/$(basename "$0")" ;;
+  *)   SELF="$(command -v -- "$0" 2>/dev/null || printf '%s' "$0")" ;;
+esac
+resolve_real_codex() {
+  if [ -n "${CODEX_FUGU_REAL_CODEX:-}" ]; then printf '%s' "$CODEX_FUGU_REAL_CODEX"; return 0; fi
+  local c="$CODEX_INSTALL_DIR/codex"
+  if [ -x "$c" ] && [ "$c" != "$SELF" ]; then printf '%s' "$c"; return 0; fi
+  local d
+  local IFS=:
+  for d in $PATH; do
+    [ -x "$d/codex" ] || continue
+    [ "$d/codex" = "$SELF" ] && continue
+    case "$(basename "$d/codex")" in codex-fugu) continue ;; esac
+    printf '%s' "$d/codex"; return 0
+  done
+  return 1
+}
+exec_codex() {
+  local real
+  if real="$(resolve_real_codex)"; then
+    exec "$real" -p fugu ${CODEX_ARGS[@]+"${CODEX_ARGS[@]}"}
+  fi
+  fug_warn "could not locate the real 'codex' binary on PATH or in ${CODEX_INSTALL_DIR}; nothing to launch."
+  exit 127
+}
+
+SAFE_IDX=1
+REPLY_IDX=1
+ask_choice() {
+  local prompt="$1"; shift
+  local -a opts=("$@"); local i r
+  printf '%s\n' "$prompt" >&2
+  for i in "${!opts[@]}"; do printf '  %d) %s\n' "$((i + 1))" "${opts[$i]}" >&2; done
+  printf 'Choose [1-%d] (default %d): ' "${#opts[@]}" "$SAFE_IDX" >&2
+  if IFS= read -r r; then :; else r=""; fi
+  case "$r" in
+    ''|*[!0-9]*) REPLY_IDX="$SAFE_IDX" ;;
+    *) if [ "$r" -ge 1 ] && [ "$r" -le "${#opts[@]}" ]; then REPLY_IDX="$r"; else REPLY_IDX="$SAFE_IDX"; fi ;;
+  esac
+}
+confirm_yn() {
+  local p="$1" r
+  printf '%s [y/N]: ' "$p" >&2
+  if IFS= read -r r; then :; else r=""; fi
+  case "$r" in [Yy]|[Yy][Ee][Ss]) return 0 ;; *) return 1 ;; esac
+}
+
+read_remote_target() {
+  git -C "$REPO_DIR" show "origin/$BRANCH:configs/bundle.sh" 2>/dev/null \
+    | sed -n 's/^BUNDLE_CODEX_VERSION="\{0,1\}\([0-9][0-9A-Za-z.\-]*\)"\{0,1\}.*/\1/p' | head -n1
+}
+remote_check() {
+  local rc=0 base
+  local -a fetchcmd
+  if command -v timeout >/dev/null 2>&1; then fetchcmd=(timeout 20 git); else fetchcmd=(git); fi
+  GIT_TERMINAL_PROMPT=0 GIT_SSH_COMMAND='ssh -oBatchMode=yes -oConnectTimeout=8' \
+    "${fetchcmd[@]}" -C "$REPO_DIR" fetch --quiet origin "$BRANCH" 2>/dev/null || rc=$?
+  if [ "$rc" -ne 0 ]; then fug_warn "update check skipped (fetch failed or timed out); continuing."; return 1; fi
+  mark_checked
+  git -C "$REPO_DIR" rev-parse --verify --quiet "origin/$BRANCH" >/dev/null 2>&1 || return 1
+  REMOTE_REF="$(git -C "$REPO_DIR" rev-parse --short "origin/$BRANCH" 2>/dev/null || true)"
+  base="$(st_get install_ref)"; case "$base" in ''|unknown) base="HEAD" ;; esac
+  if git -C "$REPO_DIR" diff --quiet "$base" "origin/$BRANCH" -- scripts/install.sh scripts/codex-fugu configs/ 2>/dev/null; then
+    return 1
+  fi
+  REMOTE_TARGET="$(read_remote_target)"
+  return 0
+}
+
+reset_clone() {
+  if [ -n "$(git -C "$REPO_DIR" status --porcelain 2>/dev/null)" ]; then
+    fug_warn "the config clone at ${REPO_DIR} has local changes that the update will DISCARD."
+    confirm_yn "Discard local changes and update?" || { fug_info "update cancelled; setup unchanged."; return 1; }
+  fi
+  local cur; cur="$(git -C "$REPO_DIR" symbolic-ref --quiet --short HEAD 2>/dev/null || true)"
+  if [ -n "$cur" ] && [ "$cur" != "$BRANCH" ]; then
+    fug_warn "the clone is on branch '${cur}', not '${BRANCH}'; not auto-resetting. Update it manually."
+    return 1
+  fi
+  if git -C "$REPO_DIR" fetch --quiet origin "$BRANCH" 2>/dev/null \
+     && git -C "$REPO_DIR" reset --hard "origin/$BRANCH" >/dev/null 2>&1; then
+    return 0
+  fi
+  fug_warn "git reset failed; setup unchanged."; return 1
+}
+apply_update() {
+  local bump="$1" newref
+  reset_clone || return 1
+  newref="$(git -C "$REPO_DIR" rev-parse --short HEAD 2>/dev/null || echo unknown)"
+  local -a args=(--yes)
+  [ "$bump" = 1 ] && args+=(--force)
+  if "$REPO_DIR/scripts/install.sh" "${args[@]}"; then
+    fug_ok "updated configs (bundle=${BUNDLE}, ref=${newref})."
+  else
+    fug_warn "install.sh did not complete cleanly; review the messages above."
+    return 1
+  fi
+}
+apply_rollback() {
+  if [ ! -x "$REPO_DIR/scripts/install.sh" ]; then
+    fug_warn "install.sh not found at ${REPO_DIR}/scripts; cannot roll back automatically."; return 1
+  fi
+  fug_info "rolling Codex back to ${DEPLOYED_TARGET} via install.sh…"
+  if "$REPO_DIR/scripts/install.sh" --pinned-version "$DEPLOYED_TARGET" --force --yes; then
+    fug_ok "Codex rolled back to ${DEPLOYED_TARGET}."
+  else
+    fug_warn "rollback did not complete cleanly; review the messages above."; return 1
+  fi
+}
+
+decide_and_apply() {
+  if [ "$MISMATCH" = 0 ] && [ "$UPDATE" = 0 ]; then return 0; fi
+
+  if [ "$UPDATE" = 1 ] && ! dec_has "skip release $REMOTE_REF"; then
+    local needs_bump=0
+    if [ -n "$REMOTE_TARGET" ] && ver_gt "$REMOTE_TARGET" "$INSTALLED"; then needs_bump=1; fi
+    if [ "$needs_bump" = 1 ]; then
+      fug_info "A Fugu config update is available (${REMOTE_REF}), but it targets Codex ${REMOTE_TARGET} and you have ${INSTALLED}."
+    elif [ -n "$REMOTE_TARGET" ] && ver_gt "$INSTALLED" "$REMOTE_TARGET"; then
+      fug_info "A Fugu config update is available (${REMOTE_REF}); it targets Codex ${REMOTE_TARGET} (you have ${INSTALLED})."
+    else
+      fug_info "A Fugu config update is available (${REMOTE_REF})."
+    fi
+    SAFE_IDX=2
+    ask_choice "Update now?" "Update" "Not now" "Skip this release"
+    case "$REPLY_IDX" in
+      1)
+        if [ "$needs_bump" = 1 ]; then
+          if confirm_yn "This will switch Codex ${INSTALLED} -> ${REMOTE_TARGET}. Proceed?"; then
+            apply_update 1
+          else
+            fug_warn "kept Codex ${INSTALLED}; configs not updated (they require ${REMOTE_TARGET})."
+          fi
+        else
+          apply_update 0
+        fi
+        return 0 ;;
+      3) dec_add "skip release $REMOTE_REF"; return 0 ;;
+      *) return 0 ;;
+    esac
+  fi
+
+  if [ "$MISMATCH" = 1 ]; then
+    if dec_has "never mismatch $INSTALLED $DEPLOYED_TARGET"; then return 0; fi
+    fug_warn "Codex is ${INSTALLED} but your Fugu configs target ${DEPLOYED_TARGET} (they were verified for that version)."
+    local method; method="$(st_get install_method)"
+    case "$method" in
+      standalone)
+        SAFE_IDX=2
+        ask_choice "Reconcile the mismatch?" "Roll Codex back to ${DEPLOYED_TARGET}" "Not now" "Don't ask again while Codex stays ${INSTALLED}"
+        case "$REPLY_IDX" in
+          1) apply_rollback ;;
+          3) dec_add "never mismatch $INSTALLED $DEPLOYED_TARGET" ;;
+          *) : ;;
+        esac
+        ;;
+      npm)
+        fug_info "Codex looks npm-managed; to match your configs run:  npm install -g @openai/codex@${DEPLOYED_TARGET}"
+        SAFE_IDX=1
+        ask_choice "Reconcile the mismatch?" "Not now" "Don't ask again while Codex stays ${INSTALLED}"
+        case "$REPLY_IDX" in
+          2) dec_add "never mismatch $INSTALLED $DEPLOYED_TARGET" ;;
+          *) : ;;
+        esac
+        ;;
+      *)
+        fug_info "Reconcile by re-running the installer:  install.sh  (it detects your install type)."
+        SAFE_IDX=1
+        ask_choice "Reconcile the mismatch?" "Not now" "Don't ask again while Codex stays ${INSTALLED}"
+        case "$REPLY_IDX" in
+          2) dec_add "never mismatch $INSTALLED $DEPLOYED_TARGET" ;;
+          *) : ;;
+        esac
+        ;;
+    esac
+  fi
+  return 0
+}
+
+maybe_adopt() {
+  [ -f "$STATE_FILE" ] && return 0
+  local recdir="$STATE_DIR/installed" rec b repo target ref branch
+  [ -d "$recdir" ] || return 0
+  rec="$(ls -1 "$recdir"/*.receipt 2>/dev/null | head -n1 || true)"
+  [ -n "$rec" ] || return 0
+  b="$(basename "$rec" .receipt)"
+  repo=""
+  for cand in "${CODEX_FUGU_REPO_DIR:-}" "$HOME/.codex-mod"; do
+    if [ -n "$cand" ] && git -C "$cand" rev-parse --git-dir >/dev/null 2>&1; then repo="$cand"; break; fi
+  done
+  [ -n "$repo" ] || return 0
+  target="$(sed -n 's/^BUNDLE_CODEX_VERSION="\{0,1\}\([0-9][0-9A-Za-z.\-]*\)"\{0,1\}.*/\1/p' "$repo/configs/bundle.sh" 2>/dev/null | head -n1)"
+  ref="$(git -C "$repo" rev-parse --short HEAD 2>/dev/null || echo unknown)"
+  branch="$(git -C "$repo" rev-parse --abbrev-ref HEAD 2>/dev/null || echo main)"
+  mkdir -p "$STATE_DIR" 2>/dev/null; chmod 700 "$STATE_DIR" 2>/dev/null || true
+  printf 'schema=1\nbundle=%s\ndeployed_target=%s\ninstall_ref=%s\nrepo_dir=%s\nbranch=%s\ninstall_method=%s\nupdated_utc=adopted\n' \
+    "$b" "$target" "$ref" "$repo" "$branch" "unknown" > "$STATE_FILE" 2>/dev/null || true
+  chmod 600 "$STATE_FILE" 2>/dev/null || true
+  fug_info "adopted an existing Fugu install (bundle=${b}, target=${target:-unknown}); run 'codex-fugu --status' to review."
+}
+
+cmd_status() {
+  local real installed
+  real="$(resolve_real_codex 2>/dev/null || true)"
+  installed="$(codex_version_of "${real:-codex}" 2>/dev/null || true)"
+  printf 'codex-fugu status\n'
+  printf '  CODEX_HOME        : %s\n' "$CODEX_HOME"
+  printf '  CODEX_INSTALL_DIR : %s\n' "$CODEX_INSTALL_DIR"
+  printf '  real codex        : %s\n' "${real:-<not found>}"
+  printf '  installed version : %s\n' "${installed:-unknown}"
+  if [ -f "$STATE_FILE" ]; then
+    printf '  bundle            : %s\n' "$(st_get bundle)"
+    printf '  deployed_target   : %s\n' "$(st_get deployed_target)"
+    printf '  deployed_format   : %s\n' "$(st_get deployed_format)"
+    printf '  repo_dir          : %s\n' "$(st_get repo_dir)"
+    printf '  branch            : %s\n' "$(st_get branch)"
+    printf '  install_ref       : %s\n' "$(st_get install_ref)"
+    printf '  install_method    : %s\n' "$(st_get install_method)"
+    printf '  last update check : %s\n' "$(last_check_human)"
+    if [ -n "$(st_get deployed_target)" ] && [ -n "$installed" ] && [ "$installed" != "$(st_get deployed_target)" ]; then
+      printf '  >> MISMATCH: installed %s != configs target %s\n' "$installed" "$(st_get deployed_target)"
+    fi
+  else
+    printf '  (no Fugu state recorded — run install.sh)\n'
+  fi
+  if [ -f "$DECISIONS_FILE" ] && [ -s "$DECISIONS_FILE" ]; then
+    printf '  suppressed (clear with --recheck):\n'
+    sed 's/^/    /' "$DECISIONS_FILE"
+  fi
+}
+cmd_recheck() {
+  rm -f "$DECISIONS_FILE" "$LASTCHECK_FILE" 2>/dev/null || true
+  fug_ok "cleared suppressed decisions and the update-check throttle; the next launch will re-check."
+}
+cmd_set_key() {
+  local b repo; b="$(st_get bundle)"; repo="$(st_get repo_dir)"
+  if [ -z "$b" ] || [ -z "$repo" ]; then
+    fug_warn "no Fugu install recorded in ${STATE_FILE}; run 'install.sh' first."
+    return 1
+  fi
+  if [ ! -x "$repo/scripts/install.sh" ]; then
+    fug_warn "install.sh not found at ${repo}/scripts; cannot configure the key."
+    return 1
+  fi
+  "$repo/scripts/install.sh" --set-key
+}
+
+parse_flags() {
+  while [ "$#" -gt 0 ]; do
+    case "$1" in
+      --status)    DO_STATUS=1 ;;
+      --recheck)   DO_RECHECK=1 ;;
+      --check)     DO_CHECK=1 ;;
+      --no-update) DO_NO_UPDATE=1 ;;
+      --set-key)   DO_SET_KEY=1 ;;
+      --) shift; CODEX_ARGS=("$@"); return 0 ;;
+      *)  CODEX_ARGS=("$@"); return 0 ;;
+    esac
+    shift
+  done
+}
+
+repo_usable() { [ -n "$REPO_DIR" ] && git -C "$REPO_DIR" rev-parse --git-dir >/dev/null 2>&1; }
+
+main() {
+  parse_flags "$@"
+  [ "$DO_STATUS" = 1 ] && { cmd_status; exit 0; }
+  [ "$DO_RECHECK" = 1 ] && { cmd_recheck; exit 0; }
+  [ "$DO_SET_KEY" = 1 ] && { cmd_set_key; exit $?; }
+
+  maybe_adopt
+
+  REPO_DIR="$(st_get repo_dir)"
+  BUNDLE="$(st_get bundle)"
+  DEPLOYED_TARGET="$(st_get deployed_target)"
+  BRANCH="$(st_get branch)"; [ -n "$BRANCH" ] || BRANCH="main"
+
+  if [ "${CODEX_FUGU_NO_UPDATE:-0}" = 1 ] || [ "$DO_NO_UPDATE" = 1 ]; then
+    exec_codex
+  fi
+  if [ "${CODEX_FUGU_ASSUME_TTY:-0}" != 1 ] && { [ ! -t 0 ] || [ ! -t 1 ]; }; then
+    exec_codex
+  fi
+  repo_usable || exec_codex
+
+  if command -v flock >/dev/null 2>&1 && mkdir -p "$STATE_DIR" 2>/dev/null && ( : >>"$LOCK_FILE" ) 2>/dev/null; then
+    exec 9>>"$LOCK_FILE"
+    flock -n 9 || exec_codex
+  fi
+
+  REAL_CODEX="$(resolve_real_codex 2>/dev/null || true)"
+  INSTALLED="$(codex_version_of "${REAL_CODEX:-codex}" 2>/dev/null || true)"
+  [ -n "$INSTALLED" ] || exec_codex
+
+  MISMATCH=0
+  if [ -n "$DEPLOYED_TARGET" ] && [ "$INSTALLED" != "$DEPLOYED_TARGET" ]; then MISMATCH=1; fi
+
+  UPDATE=0; REMOTE_TARGET=""; REMOTE_REF=""
+  if throttle_elapsed; then
+    if remote_check; then UPDATE=1; fi
+  fi
+
+  decide_and_apply
+  exec_codex
+}
+
+if [ "${BASH_SOURCE[0]}" = "${0}" ]; then
+  main "$@"
+fi

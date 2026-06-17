@@ -1,0 +1,9 @@
+[profiles.fugu]
+model = "fugu"
+model_reasoning_effort = "high"
+model_provider = "sakana"
+model_catalog_json = "{{CODEX_HOME}}/fugu.json"
+
+[profiles.fugu.features]
+image_generation = false
+apps = false
