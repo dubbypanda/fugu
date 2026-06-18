@@ -211,7 +211,10 @@ _parse_codex_version() {
   printf '%s' "$ver"
 }
 
-get_installed_version() { _parse_codex_version codex; }
+get_installed_version() {
+  if [ -x "$CODEX_INSTALL_DIR/codex" ]; then _parse_codex_version "$CODEX_INSTALL_DIR/codex"
+  else _parse_codex_version codex; fi
+}
 
 verify_installed_version() {
   local want="$1" got
@@ -220,9 +223,14 @@ verify_installed_version() {
     got="$(_parse_codex_version "$CODEX_INSTALL_DIR/codex")"
   fi
   [ "$got" = "$want" ] || die "Post-install verification failed: expected Codex ${want}, found '${got:-none}'."
-  if ! command -v codex >/dev/null 2>&1; then
+  local path_ver; path_ver="$(_parse_codex_version codex)"
+  if [ -z "$path_ver" ]; then
     log_warn "Codex installed to ${CODEX_INSTALL_DIR}, but it is not on your PATH."
     log_warn "Add it with:  export PATH=\"${CODEX_INSTALL_DIR}:\$PATH\"   (or open a new shell)."
+  elif [ "$path_ver" != "$want" ]; then
+    log_warn "Another Codex (${path_ver}) is ahead of ${CODEX_INSTALL_DIR} on your PATH and shadows the pinned ${want}."
+    log_warn "codex-fugu uses the pinned ${want}; plain codex / codex -p fugu would use ${path_ver}."
+    log_warn "Remove the other install or put ${CODEX_INSTALL_DIR} first on PATH."
   fi
 }
 
