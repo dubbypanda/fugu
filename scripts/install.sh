@@ -25,10 +25,7 @@ CODEX_BACKUP_ROOT="${CODEX_BACKUP_ROOT:-$HOME/.codex-backups}"
 CODEX_BACKUP_KEEP="${CODEX_BACKUP_KEEP:-10}"
 
 FUGU_CONFIGS_DIR="${FUGU_CONFIGS_DIR:-}"
-FUGU_ENV_FILE="${FUGU_ENV_FILE:-$HOME/.config/fugu/env}"
-if [ -z "${FUGU_SHELL_RC:-}" ]; then
-  if _is_macos; then FUGU_SHELL_RC="$HOME/.zshrc"; else FUGU_SHELL_RC="$HOME/.bashrc"; fi
-fi
+FUGU_ENV_FILE="${FUGU_ENV_FILE:-$CODEX_HOME/.env}"
 readonly FUGU_KEY_PROMPT_TRIES=3
 readonly BUNDLE_ID="configs"
 
@@ -112,7 +109,7 @@ Options:
       --dry-run             Resolve + detect + print intended actions only.
       --remove-config       Reverse the deployed config bundle, then exit.
       --set-key             Re-prompt for + persist the bundle's API key(s), then exit
-                            (no version-pin/deploy; secure 0600 store + shell-rc source-line).
+                            (no version-pin/deploy; secure 0600 store in $CODEX_HOME/.env).
       --reconfigure         Re-prompt / overwrite even if already configured.
       --force               Deploy the bundle even if Codex isn't at the bundle's
                             target version (also authorizes a non-interactive switch).
@@ -128,9 +125,7 @@ Environment:
   FUGU_ASSUME_YES=1         Same as --yes.
   FUGU_FORCE=1              Same as --force.
   FUGU_CONFIGS_DIR          Bundles root (default: <repo>/configs).
-  FUGU_ENV_FILE             0600 secret store (default: ~/.config/fugu/env).
-  FUGU_SHELL_RC             rc file that sources the secret store (default: ~/.zshrc on macOS,
-                            ~/.bashrc elsewhere).
+  FUGU_ENV_FILE             0600 secret store, dotenvy KEY=VALUE (default: ~/.codex/.env).
   <PROVIDER_KEY>=...        Provide a bundle's API key non-interactively (e.g. SAKANA_API_KEY).
 EOF
 }
@@ -680,9 +675,10 @@ remove_managed_block() {
 key_already_persisted() {
   local var="$1" regex="$2" line val
   [ -f "$FUGU_ENV_FILE" ] || return 1
-  line="$(grep -E "^export ${var}=" "$FUGU_ENV_FILE" 2>/dev/null | tail -n1)"
+  line="$(grep -E "^(export )?${var}=" "$FUGU_ENV_FILE" 2>/dev/null | tail -n1)"
   [ -n "$line" ] || return 1
-  val="${line#export ${var}=}"; val="${val#\'}"; val="${val%\'}"
+  val="${line#export }"; val="${val#${var}=}"
+  val="${val#\'}"; val="${val%\'}"; val="${val#\"}"; val="${val%\"}"
   printf '%s' "$val" | grep -qE -- "$regex"
 }
 
@@ -694,33 +690,29 @@ _export_from_env_file() {
 
 persist_api_key() {
   local var="$1" value="$2" dir old_umask tmp
-  case "$value" in *\'*) die "${var} value contains a single quote; refusing to persist." ;; esac
   dir="$(dirname "$FUGU_ENV_FILE")"
-  mkdir -p "$dir"; chmod 700 "$dir" 2>/dev/null || true
+  mkdir -p "$dir"
   old_umask="$(umask)"; umask 077
   [ -f "$FUGU_ENV_FILE" ] || : > "$FUGU_ENV_FILE"
   chmod 600 "$FUGU_ENV_FILE" 2>/dev/null || true
   tmp="$(mktemp "${dir}/.env.XXXXXX")"; chmod 600 "$tmp" 2>/dev/null || true
-  grep -vE "^export ${var}=" "$FUGU_ENV_FILE" 2>/dev/null > "$tmp" || true
-  printf "export %s='%s'\n" "$var" "$value" >> "$tmp"
+  grep -vE "^(export )?${var}=" "$FUGU_ENV_FILE" 2>/dev/null > "$tmp" || true
+  printf '%s=%s\n' "$var" "$value" >> "$tmp"
   cat "$tmp" > "$FUGU_ENV_FILE"; rm -f "$tmp"
   umask "$old_umask"
-  inject_managed_block "$FUGU_SHELL_RC" "env" "[ -f \"$FUGU_ENV_FILE\" ] && . \"$FUGU_ENV_FILE\""
 }
 
 remove_api_key() {
   local var="$1" tmp
-  if [ "${DRY_RUN:-0}" = "1" ]; then log_info "[dry-run] would remove ${var} from ${FUGU_ENV_FILE} (and its rc block if now empty)."; return 0; fi
+  if [ "${DRY_RUN:-0}" = "1" ]; then log_info "[dry-run] would remove ${var} from ${FUGU_ENV_FILE} (and the file itself if now empty)."; return 0; fi
   [ -f "$FUGU_ENV_FILE" ] || { log_info "No env file ${FUGU_ENV_FILE}."; return 0; }
   tmp="$(mktemp "${TMPDIR:-/tmp}/fugu-envrm.XXXXXX")"; chmod 600 "$tmp" 2>/dev/null || true
-  grep -vE "^export ${var}=" "$FUGU_ENV_FILE" > "$tmp" 2>/dev/null || true
+  grep -vE "^(export )?${var}=" "$FUGU_ENV_FILE" > "$tmp" 2>/dev/null || true
   cat "$tmp" > "$FUGU_ENV_FILE"; rm -f "$tmp"
   log_ok "Removed ${var} from ${FUGU_ENV_FILE}."
   if [ ! -s "$FUGU_ENV_FILE" ]; then
     rm -f "$FUGU_ENV_FILE"
-    remove_managed_block "$FUGU_SHELL_RC" "env"
-    rmdir "$(dirname "$FUGU_ENV_FILE")" 2>/dev/null || true
-    log_info "Env file empty; removed it and its rc sourcing block."
+    log_info "Env file empty; removed it."
   fi
 }
 
@@ -761,8 +753,7 @@ setup_api_key() {
   persist_api_key "$var" "$value"
   export "$var"="$value"
   unset value existing
-  log_ok "${var} configured (stored 0600 in ${FUGU_ENV_FILE}; sourced from ${FUGU_SHELL_RC})."
-  log_info "New shells load it automatically. To use it in your current shell now, run: source ${FUGU_ENV_FILE}"
+  log_ok "${var} configured (stored 0600 in ${FUGU_ENV_FILE}; Codex loads it automatically)."
 }
 
 install_bundle_inject() {

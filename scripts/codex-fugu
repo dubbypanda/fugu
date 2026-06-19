@@ -142,17 +142,35 @@ reset_clone() {
   fug_warn "git reset failed; setup unchanged."; return 1
 }
 apply_update() {
-  local bump="$1" newref
+  local bump="$1" newref old_ref
+  old_ref="$(st_get install_ref)"
   reset_clone || return 1
   newref="$(git -C "$REPO_DIR" rev-parse --short HEAD 2>/dev/null || echo unknown)"
   local -a args=(--yes)
   [ "$bump" = 1 ] && args+=(--force)
   if "$REPO_DIR/scripts/install.sh" "${args[@]}"; then
     fug_ok "updated configs (bundle=${BUNDLE}, ref=${newref})."
+    show_update_notes "$old_ref" || true
   else
     fug_warn "install.sh did not complete cleanly; review the messages above."
     return 1
   fi
+}
+show_update_notes() {
+  local old_ref="$1" files f
+  [ -d "$REPO_DIR/notes" ] || return 0
+  case "$old_ref" in ''|unknown) return 0 ;; esac
+  files="$(git -C "$REPO_DIR" diff --diff-filter=A --name-only "$old_ref" HEAD -- notes/ 2>/dev/null | LC_ALL=C sort)"
+  [ -n "$files" ] || return 0
+  fug_info "what changed in this update (and any manual steps):"
+  while IFS= read -r f; do
+    { [ -n "$f" ] && [ -f "$REPO_DIR/$f" ]; } || continue
+    printf '%s── %s ──%s\n' "$_D" "${f#notes/}" "$_N" >&2
+    cat "$REPO_DIR/$f" >&2; printf '\n' >&2
+  done <<EOF
+$files
+EOF
+  return 0
 }
 apply_rollback() {
   if [ ! -x "$REPO_DIR/scripts/install.sh" ]; then
