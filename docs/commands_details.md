@@ -1,6 +1,38 @@
 # Command reference
 
-Additional flags and options for the Fugu installer and launcher.
+This reference covers the Fugu one-line install, the flags for the installer and the `codex-fugu` launcher, and how your Codex config is backed up, restored, and protected.
+
+## The one-line install
+
+The one-line install runs a small bootstrap script served at `https://sakana.ai/fugu/install`. The script clones this repository into `~/.fugu`, then runs `~/.fugu/scripts/install.sh`, which pins Codex, deploys the Fugu config, and stores your API key. Anything you pass after `bash` is forwarded straight to `install.sh`, so every installer flag below also works through the one-line command.
+
+```bash
+curl -fsSL https://sakana.ai/fugu/install | bash
+```
+
+The bootstrap reads two environment variables of its own. The installer's own variables (`SAKANA_API_KEY`, `CODEX_HOME`, `CODEX_INSTALL_DIR`, and the rest) pass straight through to it.
+
+| Variable | Default | Purpose |
+| --- | --- | --- |
+| `FUGU_REPO_URL` | `https://github.com/SakanaAI/fugu.git` | clone source for the repo |
+| `FUGU_HOME` | `~/.fugu` | directory the repo is cloned into |
+
+Common forms:
+
+| Situation | Command |
+| --- | --- |
+| Standard install | `curl -fsSL https://sakana.ai/fugu/install \| bash` |
+| Pass installer flags | `curl -fsSL https://sakana.ai/fugu/install \| bash -s -- --yes` |
+| Non-interactive or CI | `curl -fsSL https://sakana.ai/fugu/install \| SAKANA_API_KEY=your_key bash -s -- --yes` |
+| Custom clone source | `curl -fsSL https://sakana.ai/fugu/install \| FUGU_REPO_URL=<url-or-path> bash` |
+
+`bash -s --` passes the arguments that follow to the script, so `bash -s -- --yes` runs the installer with `--yes`. Place any environment variable right before `bash` so it reaches the installer rather than `curl`. Re-running the command reuses an existing `~/.fugu`, and ongoing updates are handled by `codex-fugu`, so a re-run is rarely needed.
+
+An equivalent that needs no hosted endpoint and shows exactly what runs:
+
+```bash
+( git clone https://github.com/SakanaAI/fugu.git ~/.fugu && bash ~/.fugu/scripts/install.sh )
+```
 
 ## Installer flags
 
@@ -36,3 +68,16 @@ SAKANA_API_KEY=your_key bash ~/.fugu/scripts/install.sh --yes
 | `--no-update` | Skip the update check for this launch |
 
 Set `CODEX_FUGU_NO_UPDATE=1` to turn update checks off for good.
+
+## Config backup, restore, and protection
+
+Before switching the Codex version or making its first edit to `config.toml`, the installer saves a timestamped copy of your existing config to `~/.codex-backups/codex-config-<timestamp>/`. This location sits outside `~/.codex`, so a backup survives even a full `rm -rf ~/.codex`. Each backup holds your `config.toml`, any `*.config.toml`, `auth.json`, other catalog `*.json`, and `*.md` files, plus a `MANIFEST.txt` and a `SHA256SUMS` for verification. The 10 most recent backups are kept. Use `CODEX_BACKUP_KEEP` and `CODEX_BACKUP_ROOT` to change the count and location, or `--no-backup` to skip the step.
+
+To restore a backup, copy it back over your config directory and re-check it:
+
+```bash
+rsync -a --exclude MANIFEST.txt --exclude SHA256SUMS ~/.codex-backups/codex-config-<timestamp>/ ~/.codex/
+codex doctor   # expect: config.toml parse: ok
+```
+
+Your provider settings go into `config.toml` inside managed `# >>> fugu:... >>>` markers, so a re-deploy replaces only that block and leaves the rest of your config untouched. After each edit the installer re-parses the file with `codex doctor`, and if it no longer parses, the change is rolled back automatically. The stored `auth.json` is kept at mode `0600` so your credentials stay private.
