@@ -72,3 +72,20 @@ Since publication, we have made several enhancements. The full technical report 
 Please contact us at https://fugu.sakana.ai for issues or bugs while using Sakana Fugu.
 
 
+## Citation
+
+If you use Sakana Fugu in your research, please cite our technical report:
+
+```bibtex
+@misc{fugu2026sakana,
+      title={Sakana Fugu Technical Report},
+      author={{Fugu Team, Sakana AI}},
+      year={2026},
+      eprint={2606.21228},
+      archivePrefix={arXiv},
+      primaryClass={cs.LG},
+      url={https://arxiv.org/abs/2606.21228},
+}
+```
+
+
