@@ -10,7 +10,7 @@ DECISIONS_FILE="$STATE_DIR/decisions"
 LASTCHECK_FILE="$STATE_DIR/last_check"
 LOCK_FILE="$STATE_DIR/.lock"
 NOTICES_FILE="$STATE_DIR/notices"
-THROTTLE_SECS="${CODEX_FUGU_CHECK_INTERVAL:-86400}"
+THROTTLE_SECS="${CODEX_FUGU_CHECK_INTERVAL:-3600}"
 
 NOTICE_ID="fugu-default-model-2026-06"
 NOTICE_MSG="Fugu is designed to provide the best balance of cost and performance, it is the go-to model in codex-fugu. Choose Fugu Ultra only for complex tasks where quality is your top priority."

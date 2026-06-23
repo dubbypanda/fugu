@@ -57,13 +57,13 @@ SAKANA_API_KEY=your_key bash ~/.fugu/scripts/install.sh --yes
 
 ## Launcher flags
 
-`codex-fugu` runs `codex -p fugu` and, at most once a day, checks this repo for config updates and offers to apply them. It never blocks launch, and any arguments you pass go straight to Codex.
+`codex-fugu` runs `codex -p fugu` and, at most once an hour, checks this repo for config updates and offers to apply them. It never blocks launch, and any arguments you pass go straight to Codex.
 
 | Flag | What it does |
 | --- | --- |
 | `--status` | Show the installed version, the pinned target, and update state |
 | `--set-key` | Rotate the stored Sakana API key |
-| `--check` | Check for a config update now instead of waiting for the daily check |
+| `--check` | Check for a config update now instead of waiting for the hourly check |
 | `--recheck` | Re-enable update prompts you previously dismissed, then check |
 | `--no-update` | Skip the update check for this launch |
 
@@ -87,7 +87,7 @@ Because forwarding starts at the first non-launcher argument, put any launcher f
 
 ## Codex version management and session resume
 
-`codex-fugu` and the installer also manage your Codex version. The Fugu configs are verified against a specific Codex version, so on a mismatch the installer offers to switch your Codex binary to that version, and the launcher offers the same reconcile at most once a day. A switch happens only with your consent, either an interactive yes or `--force`.
+`codex-fugu` and the installer also manage your Codex version. The Fugu configs are verified against a specific Codex version, so on a mismatch the installer offers to switch your Codex binary to that version, and the launcher offers the same reconcile at most once an hour. A switch happens only with your consent, either an interactive yes or `--force`.
 
 Codex keeps a per-version session index, so `codex resume` lists different past sessions after a version switch. Your session transcripts under `~/.codex/sessions` are never deleted by a switch. Only which sessions `codex resume` enumerates changes.
 
