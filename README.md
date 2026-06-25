@@ -26,7 +26,7 @@ See the [command reference](docs/commands_details.md) for additional flags and o
 
 ## Superior performance via intelligent coordination
 
-Sakana Fugu achieves superior performance by dynamically coordinating and orchestrating a diverse pool of powerful models. For evaluation details, check [our technical report](Fugu_technical_report.pdf).
+Sakana Fugu achieves superior performance by dynamically coordinating and orchestrating a diverse pool of powerful models. For evaluation details, check [our technical report](https://arxiv.org/abs/2606.21228).
 
 <p align="center">
   <img src="assets/figures/performance_1.png" alt="Sakana Fugu performance" width="820">
