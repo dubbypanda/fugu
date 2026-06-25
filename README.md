@@ -64,7 +64,7 @@ Sakana Fugu is based on two papers published in ICLR 2026.
   </tr>
 </table>
 
-Since publication, we have made several enhancements. The full technical report is available [here](Fugu_technical_report.pdf).
+Since publication, we have made several enhancements. The full technical report is available [here](https://arxiv.org/abs/2606.21228).
 
 
 ## Support
