@@ -1,0 +1,17 @@
+{
+  "key": "opus48",
+  "ok": false,
+  "n_cubes": 300,
+  "n_solved": 0,
+  "solve_rate": 0.0,
+  "hero_solved": false,
+  "hero_turns": null,
+  "mean_turns": null,
+  "median_turns": null,
+  "min_turns": null,
+  "max_turns": null,
+  "n_timeout": 0,
+  "max_secs": 0.0,
+  "error": "contract_fail: IndexError: list index out of range (module raises at import; no usable solve() \u2014 fails identically on all cubes)",
+  "results": []
+}

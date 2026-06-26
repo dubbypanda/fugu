@@ -1,11 +1,11 @@
 {
   "key": "fugu",
   "ok": true,
-  "n_cubes": 200,
-  "n_solved": 200,
+  "n_cubes": 300,
+  "n_solved": 300,
   "solve_rate": 1.0,
-  "hero_solved": false,
-  "hero_turns": null,
+  "hero_solved": true,
+  "hero_turns": 21,
   "mean_turns": 21.15,
   "median_turns": 21.0,
   "min_turns": 19,
@@ -13,6 +13,906 @@
   "n_timeout": 0,
   "max_secs": 12.7,
   "results": [
+    {
+      "id": 0,
+      "hero": true,
+      "solved": true,
+      "turns": 21,
+      "solution": "R' U B L' F' L' F2 R B L' F2 L2 B2 U2 B2 U' L2 D' R2 F2 D",
+      "error": null,
+      "secs": 11.97
+    },
+    {
+      "id": 1,
+      "hero": false,
+      "solved": true,
+      "turns": 20,
+      "solution": "D' R' B U2 F D F' L2 D' R' U B2 R2 F2 U' L2 F2 B2 U2 L2",
+      "error": null,
+      "secs": 1.23
+    },
+    {
+      "id": 2,
+      "hero": false,
+      "solved": true,
+      "turns": 22,
+      "solution": "U' L F2 B2 U2 L' U D B R' B2 U2 R2 D B2 L2 D2 R2 U R2 L2 U'",
+      "error": null,
+      "secs": 1.13
+    },
+    {
+      "id": 3,
+      "hero": false,
+      "solved": true,
+      "turns": 21,
+      "solution": "F' L2 D' B R' D R' U L D' R F2 U' B2 D' F2 D' F2 D2 R2 F2",
+      "error": null,
+      "secs": 1.45
+    },
+    {
+      "id": 4,
+      "hero": false,
+      "solved": true,
+      "turns": 21,
+      "solution": "U2 B L2 D F R2 F' L' F' B R' B2 D2 R2 U L2 U' R2 B2 D' B2",
+      "error": null,
+      "secs": 3.67
+    },
+    {
+      "id": 5,
+      "hero": false,
+      "solved": true,
+      "turns": 21,
+      "solution": "R2 F2 B2 R F2 L B2 D' F' R2 F2 U B2 D2 L2 B2 D' F2 B2 D2 L2",
+      "error": null,
+      "secs": 1.56
+    },
+    {
+      "id": 6,
+      "hero": false,
+      "solved": true,
+      "turns": 22,
+      "solution": "U F' D B2 L' F' B2 R' U' D F2 U R2 U F2 R2 F2 B2 D B2 D' F2",
+      "error": null,
+      "secs": 7.33
+    },
+    {
+      "id": 7,
+      "hero": false,
+      "solved": true,
+      "turns": 21,
+      "solution": "L F2 D R2 D F' L B L F' U B2 R2 U' D2 F2 L2 D' L2 D R2",
+      "error": null,
+      "secs": 1.61
+    },
+    {
+      "id": 8,
+      "hero": false,
+      "solved": true,
+      "turns": 20,
+      "solution": "B U' D L B' U F2 D F L D' F2 L2 U L2 U' F2 U F2 R2",
+      "error": null,
+      "secs": 0.58
+    },
+    {
+      "id": 9,
+      "hero": false,
+      "solved": true,
+      "turns": 19,
+      "solution": "D' L U' B2 D L D F D' B L2 D2 B2 U D2 B2 R2 U L2",
+      "error": null,
+      "secs": 1.26
+    },
+    {
+      "id": 10,
+      "hero": false,
+      "solved": true,
+      "turns": 22,
+      "solution": "F' B2 U' R U L2 B2 R2 U' F' U F2 R2 D' L2 F2 D' R2 F2 U D2 B2",
+      "error": null,
+      "secs": 2.52
+    },
+    {
+      "id": 11,
+      "hero": false,
+      "solved": true,
+      "turns": 22,
+      "solution": "U2 F2 D2 R2 L U D B2 L B' U F2 D' F2 U F2 B2 D F2 U R2 L2",
+      "error": null,
+      "secs": 1.81
+    },
+    {
+      "id": 12,
+      "hero": false,
+      "solved": true,
+      "turns": 22,
+      "solution": "L' U' D R2 L' F' D F2 L2 B' U2 L2 F2 D2 L2 B2 U B2 R2 U F2 U'",
+      "error": null,
+      "secs": 2.1
+    },
+    {
+      "id": 13,
+      "hero": false,
+      "solved": true,
+      "turns": 20,
+      "solution": "U2 R B U' R2 F U2 R2 F U L U2 R2 D F2 U R2 D' F2 D",
+      "error": null,
+      "secs": 0.44
+    },
+    {
+      "id": 14,
+      "hero": false,
+      "solved": true,
+      "turns": 21,
+      "solution": "R2 B' R' B L2 U' L U2 D' L U2 D B2 R2 D2 B2 U F2 D L2 D2",
+      "error": null,
+      "secs": 0.43
+    },
+    {
+      "id": 15,
+      "hero": false,
+      "solved": true,
+      "turns": 22,
+      "solution": "R2 U2 F' R' U R2 D2 L' B R2 F D' F2 R2 U2 L2 D' L2 U2 B2 R2 U",
+      "error": null,
+      "secs": 2.69
+    },
+    {
+      "id": 16,
+      "hero": false,
+      "solved": true,
+      "turns": 21,
+      "solution": "U2 F' B' R U' R2 F L2 D' F R2 F2 R2 L2 U L2 U F2 D2 L2 B2",
+      "error": null,
+      "secs": 0.35
+    },
+    {
+      "id": 17,
+      "hero": false,
+      "solved": true,
+      "turns": 22,
+      "solution": "U' R' D2 L B D F2 R2 F L B2 U B2 D' F2 U' D B2 U R2 B2 L2",
+      "error": null,
+      "secs": 1.04
+    },
+    {
+      "id": 18,
+      "hero": false,
+      "solved": true,
+      "turns": 22,
+      "solution": "U2 R L' F' B' R B R' D' R2 B R2 D L2 D R2 D2 L2 F2 U F2 U2",
+      "error": null,
+      "secs": 1.65
+    },
+    {
+      "id": 19,
+      "hero": false,
+      "solved": true,
+      "turns": 21,
+      "solution": "U' D B R2 L' U2 D' R2 U R F2 L2 F2 U L2 U R2 U' D2 F2 D'",
+      "error": null,
+      "secs": 0.39
+    },
+    {
+      "id": 20,
+      "hero": false,
+      "solved": true,
+      "turns": 20,
+      "solution": "U' L F' U R' B' U' D B2 L D' L2 D' L2 U R2 D' B2 R2 L2",
+      "error": null,
+      "secs": 0.37
+    },
+    {
+      "id": 21,
+      "hero": false,
+      "solved": true,
+      "turns": 22,
+      "solution": "R' D' R' B' U R2 B2 R' U B U F2 B2 L2 D L2 U' R2 D2 L2 F2 D'",
+      "error": null,
+      "secs": 2.01
+    },
+    {
+      "id": 22,
+      "hero": false,
+      "solved": true,
+      "turns": 22,
+      "solution": "D B' L U R' F' L2 B' L B F2 R2 D' B2 U2 L2 D L2 F2 R2 U2 R2",
+      "error": null,
+      "secs": 2.2
+    },
+    {
+      "id": 23,
+      "hero": false,
+      "solved": true,
+      "turns": 21,
+      "solution": "F B' R U2 F2 L2 B' L F B2 U' B2 D F2 U' R2 B2 L2 B2 U2 R2",
+      "error": null,
+      "secs": 1.13
+    },
+    {
+      "id": 24,
+      "hero": false,
+      "solved": true,
+      "turns": 21,
+      "solution": "U' R2 L' F B' R' L' D' B' U B2 R2 D B2 D F2 R2 U2 R2 U' R2",
+      "error": null,
+      "secs": 0.67
+    },
+    {
+      "id": 25,
+      "hero": false,
+      "solved": true,
+      "turns": 22,
+      "solution": "R B' D2 R' U' R2 U2 B' U' L B2 U B2 D' L2 D F2 U R2 B2 L2 U",
+      "error": null,
+      "secs": 1.05
+    },
+    {
+      "id": 26,
+      "hero": false,
+      "solved": true,
+      "turns": 22,
+      "solution": "U2 B D2 R' F2 L2 D2 B R2 U L' B2 D' F2 D R2 F2 U2 B2 D B2 D2",
+      "error": null,
+      "secs": 2.12
+    },
+    {
+      "id": 27,
+      "hero": false,
+      "solved": true,
+      "turns": 22,
+      "solution": "R F2 U2 R D R L' U D2 F U2 B2 L2 D' R2 D' F2 D' L2 D' F2 D'",
+      "error": null,
+      "secs": 1.74
+    },
+    {
+      "id": 28,
+      "hero": false,
+      "solved": true,
+      "turns": 22,
+      "solution": "U' L' B' U F' R2 L D2 B' D R2 D L2 U' F2 R2 B2 U F2 U L2 U",
+      "error": null,
+      "secs": 4.66
+    },
+    {
+      "id": 29,
+      "hero": false,
+      "solved": true,
+      "turns": 21,
+      "solution": "R L' B U2 B L' F U F' D' R' D L2 U D2 F2 B2 D' F2 L2 B2",
+      "error": null,
+      "secs": 1.84
+    },
+    {
+      "id": 30,
+      "hero": false,
+      "solved": true,
+      "turns": 22,
+      "solution": "L F U F' D R' F2 L' U2 F R2 U R2 F2 U F2 D' F2 B2 U' R2 D",
+      "error": null,
+      "secs": 1.39
+    },
+    {
+      "id": 31,
+      "hero": false,
+      "solved": true,
+      "turns": 19,
+      "solution": "U L' U2 L U' R D2 R B F2 L2 B2 D B2 R2 D R2 U' R2",
+      "error": null,
+      "secs": 0.0
+    },
+    {
+      "id": 32,
+      "hero": false,
+      "solved": true,
+      "turns": 21,
+      "solution": "F B' U L' B2 R' F' L2 U' F' R2 F2 B2 D' R2 U' L2 U' D' L2 F2",
+      "error": null,
+      "secs": 1.7
+    },
+    {
+      "id": 33,
+      "hero": false,
+      "solved": true,
+      "turns": 21,
+      "solution": "B L2 D2 B' R' D' B' L U' F' L2 B2 D' B2 U' F2 U R2 D' R2 F2",
+      "error": null,
+      "secs": 0.84
+    },
+    {
+      "id": 34,
+      "hero": false,
+      "solved": true,
+      "turns": 21,
+      "solution": "F L2 U2 R2 U' R' F2 D L B L2 U' R2 U' F2 L2 U L2 D2 B2 D'",
+      "error": null,
+      "secs": 4.4
+    },
+    {
+      "id": 35,
+      "hero": false,
+      "solved": true,
+      "turns": 22,
+      "solution": "B' R' L2 U D' L' B U' L2 F D2 L2 D' L2 U F2 B2 U' R2 D R2 D'",
+      "error": null,
+      "secs": 2.34
+    },
+    {
+      "id": 36,
+      "hero": false,
+      "solved": true,
+      "turns": 22,
+      "solution": "L' U' F2 U R F2 U' R2 D2 B' U2 B2 U' F2 R2 U L2 F2 L2 D2 L2 B2",
+      "error": null,
+      "secs": 1.55
+    },
+    {
+      "id": 37,
+      "hero": false,
+      "solved": true,
+      "turns": 21,
+      "solution": "B L' F2 L' D F R F R U F2 R2 U R2 D F2 B2 D2 B2 D' B2",
+      "error": null,
+      "secs": 0.93
+    },
+    {
+      "id": 38,
+      "hero": false,
+      "solved": true,
+      "turns": 21,
+      "solution": "R U2 R' D' B U L' B' D' R F2 L2 F2 U D2 L2 D2 B2 L2 D L2",
+      "error": null,
+      "secs": 2.4
+    },
+    {
+      "id": 39,
+      "hero": false,
+      "solved": true,
+      "turns": 20,
+      "solution": "U R L' D F2 L2 F' L2 F2 U' L' U2 L2 D L2 D R2 B2 D F2",
+      "error": null,
+      "secs": 1.15
+    },
+    {
+      "id": 40,
+      "hero": false,
+      "solved": true,
+      "turns": 20,
+      "solution": "B' D2 R' L2 D2 F U L F' B2 U' R2 B2 R2 B2 U R2 U D2 L2",
+      "error": null,
+      "secs": 3.17
+    },
+    {
+      "id": 41,
+      "hero": false,
+      "solved": true,
+      "turns": 21,
+      "solution": "F' D F2 U' L B' R2 L' D' B U D' F2 B2 D' L2 D R2 F2 D' B2",
+      "error": null,
+      "secs": 2.34
+    },
+    {
+      "id": 42,
+      "hero": false,
+      "solved": true,
+      "turns": 21,
+      "solution": "R' B R L' D' F' L U' B2 R' L2 D' R2 B2 R2 U' B2 D' R2 L2 D'",
+      "error": null,
+      "secs": 0.65
+    },
+    {
+      "id": 43,
+      "hero": false,
+      "solved": true,
+      "turns": 22,
+      "solution": "F2 L D2 F' B' D2 L U R B L' U2 L2 U F2 D' L2 D2 R2 L2 F2 U",
+      "error": null,
+      "secs": 2.55
+    },
+    {
+      "id": 44,
+      "hero": false,
+      "solved": true,
+      "turns": 21,
+      "solution": "F U' F U2 L2 F' R U2 L2 F R' U F2 D B2 U2 R2 U' B2 D' B2",
+      "error": null,
+      "secs": 2.23
+    },
+    {
+      "id": 45,
+      "hero": false,
+      "solved": true,
+      "turns": 21,
+      "solution": "R' B2 D' B' D2 B U F B2 R' U' F2 U F2 L2 D' F2 L2 D2 B2 L2",
+      "error": null,
+      "secs": 0.64
+    },
+    {
+      "id": 46,
+      "hero": false,
+      "solved": true,
+      "turns": 22,
+      "solution": "U2 L U' R2 B U D F' B R L2 D F2 U' L2 U F2 R2 L2 D2 R2 D'",
+      "error": null,
+      "secs": 1.46
+    },
+    {
+      "id": 47,
+      "hero": false,
+      "solved": true,
+      "turns": 21,
+      "solution": "U2 R B' L F' R B' L' D' B' U D2 F2 R2 L2 U B2 L2 B2 D2 B2",
+      "error": null,
+      "secs": 0.45
+    },
+    {
+      "id": 48,
+      "hero": false,
+      "solved": true,
+      "turns": 20,
+      "solution": "U2 D R F' L U' R D F D' B F2 U B2 L2 B2 D' F2 D2 R2",
+      "error": null,
+      "secs": 0.31
+    },
+    {
+      "id": 49,
+      "hero": false,
+      "solved": true,
+      "turns": 20,
+      "solution": "R2 U D R2 D L' F2 U' B R2 L2 F2 U' F2 D2 B2 R2 B2 D F2",
+      "error": null,
+      "secs": 2.3
+    },
+    {
+      "id": 50,
+      "hero": false,
+      "solved": true,
+      "turns": 21,
+      "solution": "B2 U2 L2 D' F' B2 D2 R2 L F L2 U2 D R2 B2 R2 B2 D' R2 U B2",
+      "error": null,
+      "secs": 3.94
+    },
+    {
+      "id": 51,
+      "hero": false,
+      "solved": true,
+      "turns": 21,
+      "solution": "R U' D2 B2 D' R F2 D R F' R2 L2 U F2 U' L2 D2 L2 B2 D' L2",
+      "error": null,
+      "secs": 0.44
+    },
+    {
+      "id": 52,
+      "hero": false,
+      "solved": true,
+      "turns": 21,
+      "solution": "R L' U R' U B' L' F D' F U R2 L2 U' B2 D' B2 U F2 U B2",
+      "error": null,
+      "secs": 0.87
+    },
+    {
+      "id": 53,
+      "hero": false,
+      "solved": true,
+      "turns": 21,
+      "solution": "D2 R' D' F2 D2 F U R B D L' D2 R2 B2 D B2 U' D2 L2 F2 R2",
+      "error": null,
+      "secs": 2.96
+    },
+    {
+      "id": 54,
+      "hero": false,
+      "solved": true,
+      "turns": 21,
+      "solution": "R L D2 F' U' F' B U L2 D' R' F2 L2 U D2 F2 D2 F2 R2 B2 U",
+      "error": null,
+      "secs": 2.11
+    },
+    {
+      "id": 55,
+      "hero": false,
+      "solved": true,
+      "turns": 22,
+      "solution": "D' B L' B' R F' L' U' B D L' U' R2 D R2 F2 U F2 D' F2 R2 D2",
+      "error": null,
+      "secs": 3.86
+    },
+    {
+      "id": 56,
+      "hero": false,
+      "solved": true,
+      "turns": 21,
+      "solution": "R D' B2 U2 R L2 D' L F D' B' F2 U' F2 D' L2 F2 D B2 D' L2",
+      "error": null,
+      "secs": 2.57
+    },
+    {
+      "id": 57,
+      "hero": false,
+      "solved": true,
+      "turns": 21,
+      "solution": "U R U D R2 U R' L' F' L' D' R2 D' F2 U2 D' F2 R2 F2 L2 B2",
+      "error": null,
+      "secs": 1.71
+    },
+    {
+      "id": 58,
+      "hero": false,
+      "solved": true,
+      "turns": 21,
+      "solution": "U2 B2 R F' B' U2 R F2 L F' U L2 U2 L2 U' R2 D L2 U L2 D2",
+      "error": null,
+      "secs": 2.03
+    },
+    {
+      "id": 59,
+      "hero": false,
+      "solved": true,
+      "turns": 20,
+      "solution": "B' D' L2 F2 L' U L B' L' U2 D F2 U B2 U' L2 D R2 F2 L2",
+      "error": null,
+      "secs": 0.22
+    },
+    {
+      "id": 60,
+      "hero": false,
+      "solved": true,
+      "turns": 21,
+      "solution": "U D' R F2 D B2 D2 L' B L R2 F2 D L2 U D R2 F2 R2 L2 D2",
+      "error": null,
+      "secs": 0.8
+    },
+    {
+      "id": 61,
+      "hero": false,
+      "solved": true,
+      "turns": 22,
+      "solution": "F U D' B U' R' L' U2 D' R' D B2 R2 F2 R2 D B2 R2 U B2 D R2",
+      "error": null,
+      "secs": 9.7
+    },
+    {
+      "id": 62,
+      "hero": false,
+      "solved": true,
+      "turns": 22,
+      "solution": "L D' F' R2 F' D R' B2 D B D2 F2 R2 L2 U F2 L2 B2 U' L2 U' L2",
+      "error": null,
+      "secs": 2.1
+    },
+    {
+      "id": 63,
+      "hero": false,
+      "solved": true,
+      "turns": 22,
+      "solution": "U F' R' D2 F2 L F B2 U' L' U B2 D B2 D' R2 B2 L2 D' L2 U F2",
+      "error": null,
+      "secs": 0.94
+    },
+    {
+      "id": 64,
+      "hero": false,
+      "solved": true,
+      "turns": 23,
+      "solution": "D R L' U' B U2 F2 D' F' L D2 R2 L2 F2 D2 B2 D' R2 U' B2 D R2 U'",
+      "error": null,
+      "secs": 3.74
+    },
+    {
+      "id": 65,
+      "hero": false,
+      "solved": true,
+      "turns": 22,
+      "solution": "R D2 F2 R2 B R' U L B' D' B2 D R2 D L2 B2 R2 U' L2 U B2 U",
+      "error": null,
+      "secs": 2.66
+    },
+    {
+      "id": 66,
+      "hero": false,
+      "solved": true,
+      "turns": 22,
+      "solution": "F D F' U2 F R' B2 D' F2 R U2 B2 U' F2 D2 R2 D R2 F2 B2 D' L2",
+      "error": null,
+      "secs": 4.51
+    },
+    {
+      "id": 67,
+      "hero": false,
+      "solved": true,
+      "turns": 21,
+      "solution": "R F2 U F B2 D B' U' L' R2 U' L2 D R2 D' L2 U' F2 U R2 F2",
+      "error": null,
+      "secs": 0.57
+    },
+    {
+      "id": 68,
+      "hero": false,
+      "solved": true,
+      "turns": 21,
+      "solution": "U D' L' U2 D' R' B2 U' B' L' D B2 U' D' B2 L2 D F2 R2 B2 D",
+      "error": null,
+      "secs": 1.1
+    },
+    {
+      "id": 69,
+      "hero": false,
+      "solved": true,
+      "turns": 22,
+      "solution": "U B D2 L' U' F R2 L' F L' R2 B2 U2 L2 U F2 U2 B2 R2 D F2 U'",
+      "error": null,
+      "secs": 0.79
+    },
+    {
+      "id": 70,
+      "hero": false,
+      "solved": true,
+      "turns": 21,
+      "solution": "U' R D' L2 F' B U R L F L2 U' B2 U' R2 F2 R2 B2 D' B2 D",
+      "error": null,
+      "secs": 0.5
+    },
+    {
+      "id": 71,
+      "hero": false,
+      "solved": true,
+      "turns": 20,
+      "solution": "U' F' D' F2 D' F D2 F R U' L2 U2 D R2 D R2 F2 D' L2 B2",
+      "error": null,
+      "secs": 0.7
+    },
+    {
+      "id": 72,
+      "hero": false,
+      "solved": true,
+      "turns": 22,
+      "solution": "R2 L U D2 F2 R2 U2 F' R U B2 U D B2 L2 F2 B2 U B2 L2 D R2",
+      "error": null,
+      "secs": 5.29
+    },
+    {
+      "id": 73,
+      "hero": false,
+      "solved": true,
+      "turns": 21,
+      "solution": "R' D2 L' D2 F2 B D F' L U' F2 L2 U' L2 U' B2 U2 R2 L2 F2 D'",
+      "error": null,
+      "secs": 0.41
+    },
+    {
+      "id": 74,
+      "hero": false,
+      "solved": true,
+      "turns": 21,
+      "solution": "B L D B R' B' U2 F2 D B L2 U2 R2 F2 U' L2 U R2 D' L2 U",
+      "error": null,
+      "secs": 3.27
+    },
+    {
+      "id": 75,
+      "hero": false,
+      "solved": true,
+      "turns": 20,
+      "solution": "D L U2 B' D2 L U B2 R' F2 D2 B2 U' L2 B2 U F2 D L2 U'",
+      "error": null,
+      "secs": 0.02
+    },
+    {
+      "id": 76,
+      "hero": false,
+      "solved": true,
+      "turns": 22,
+      "solution": "R F' L D' L2 B U F' B R F2 L2 U R2 D' F2 U F2 U F2 L2 U'",
+      "error": null,
+      "secs": 1.09
+    },
+    {
+      "id": 77,
+      "hero": false,
+      "solved": true,
+      "turns": 21,
+      "solution": "U R B' L' B L' D' L D2 R B R2 L2 D R2 L2 D2 B2 U R2 D",
+      "error": null,
+      "secs": 3.49
+    },
+    {
+      "id": 78,
+      "hero": false,
+      "solved": true,
+      "turns": 21,
+      "solution": "U2 F B2 D' B' U R2 D' R' U2 R2 F2 U R2 D' L2 U L2 F2 B2 D2",
+      "error": null,
+      "secs": 0.64
+    },
+    {
+      "id": 79,
+      "hero": false,
+      "solved": true,
+      "turns": 20,
+      "solution": "D' B U R L' U L B2 L2 U' L2 F2 L2 D L2 B2 U' D' R2 L2",
+      "error": null,
+      "secs": 0.31
+    },
+    {
+      "id": 80,
+      "hero": false,
+      "solved": true,
+      "turns": 21,
+      "solution": "U2 R2 L2 B' R F2 L' U' R2 F' B U L2 U' B2 U L2 D2 F2 U' B2",
+      "error": null,
+      "secs": 0.61
+    },
+    {
+      "id": 81,
+      "hero": false,
+      "solved": true,
+      "turns": 23,
+      "solution": "F' R F2 R' B' U F' L' D' F U F2 U' L2 B2 U' F2 D L2 F2 D F2 D2",
+      "error": null,
+      "secs": 2.2
+    },
+    {
+      "id": 82,
+      "hero": false,
+      "solved": true,
+      "turns": 20,
+      "solution": "B U D' B R D' F R L F2 D L2 F2 R2 D2 L2 D' R2 U L2",
+      "error": null,
+      "secs": 0.0
+    },
+    {
+      "id": 83,
+      "hero": false,
+      "solved": true,
+      "turns": 22,
+      "solution": "L B2 L B' U' D B' R U L R2 D2 B2 R2 B2 U' F2 U F2 L2 U' B2",
+      "error": null,
+      "secs": 3.14
+    },
+    {
+      "id": 84,
+      "hero": false,
+      "solved": true,
+      "turns": 20,
+      "solution": "U R' F R B' D2 F U R' F2 B2 U B2 L2 D' L2 D' L2 U R2",
+      "error": null,
+      "secs": 0.47
+    },
+    {
+      "id": 85,
+      "hero": false,
+      "solved": true,
+      "turns": 20,
+      "solution": "R' U R' L2 U' B' L' U F R' B U R2 U2 D2 R2 U' L2 F2 L2",
+      "error": null,
+      "secs": 5.64
+    },
+    {
+      "id": 86,
+      "hero": false,
+      "solved": true,
+      "turns": 22,
+      "solution": "L' F2 L' F' U R D2 F L' D' R2 F2 D F2 D' B2 D2 B2 L2 U' F2 D",
+      "error": null,
+      "secs": 1.61
+    },
+    {
+      "id": 87,
+      "hero": false,
+      "solved": true,
+      "turns": 21,
+      "solution": "U D' L2 U2 F' R' U2 F U D2 L2 F2 U2 D' B2 U' B2 R2 D' F2 B2",
+      "error": null,
+      "secs": 2.07
+    },
+    {
+      "id": 88,
+      "hero": false,
+      "solved": true,
+      "turns": 22,
+      "solution": "D R' F' D' B L U' F2 D' R L2 U' R2 U L2 U2 B2 L2 F2 D' B2 U'",
+      "error": null,
+      "secs": 0.59
+    },
+    {
+      "id": 89,
+      "hero": false,
+      "solved": true,
+      "turns": 21,
+      "solution": "B' R' F2 U' R F' R' F2 B R U F2 R2 U2 B2 U F2 L2 U B2 U'",
+      "error": null,
+      "secs": 0.66
+    },
+    {
+      "id": 90,
+      "hero": false,
+      "solved": true,
+      "turns": 21,
+      "solution": "R' F B R2 B2 U2 R' B' U' D' L' U' L2 U F2 R2 D' L2 D' L2 F2",
+      "error": null,
+      "secs": 1.56
+    },
+    {
+      "id": 91,
+      "hero": false,
+      "solved": true,
+      "turns": 19,
+      "solution": "D2 L F D' F' R' U2 F R F2 B2 D2 F2 D F2 D' L2 U2 D",
+      "error": null,
+      "secs": 0.0
+    },
+    {
+      "id": 92,
+      "hero": false,
+      "solved": true,
+      "turns": 22,
+      "solution": "R U R B' L D F U' B2 R F2 U' B2 R2 B2 D' L2 F2 U R2 L2 U",
+      "error": null,
+      "secs": 1.83
+    },
+    {
+      "id": 93,
+      "hero": false,
+      "solved": true,
+      "turns": 21,
+      "solution": "U2 F' B2 U R F B U2 R F' B2 U F2 D2 B2 D L2 U F2 D L2",
+      "error": null,
+      "secs": 0.31
+    },
+    {
+      "id": 94,
+      "hero": false,
+      "solved": true,
+      "turns": 21,
+      "solution": "R2 D2 R2 F R D' L2 F L' F' B D F2 U F2 U2 B2 L2 U' R2 B2",
+      "error": null,
+      "secs": 0.72
+    },
+    {
+      "id": 95,
+      "hero": false,
+      "solved": true,
+      "turns": 22,
+      "solution": "U R' L' U' L F R2 L' B' U' R2 D B2 D' F2 R2 D R2 U2 L2 U L2",
+      "error": null,
+      "secs": 0.78
+    },
+    {
+      "id": 96,
+      "hero": false,
+      "solved": true,
+      "turns": 20,
+      "solution": "U B U' B2 L2 D L F R F' B2 D' L2 D' B2 L2 B2 U' B2 D'",
+      "error": null,
+      "secs": 1.75
+    },
+    {
+      "id": 97,
+      "hero": false,
+      "solved": true,
+      "turns": 22,
+      "solution": "U' B R2 L' U2 R' B R2 U L B2 U B2 U B2 D2 L2 B2 D' B2 U2 B2",
+      "error": null,
+      "secs": 1.56
+    },
+    {
+      "id": 98,
+      "hero": false,
+      "solved": true,
+      "turns": 21,
+      "solution": "D L2 D L' F' L2 F B' R' B' L2 D F2 L2 B2 D L2 D B2 L2 B2",
+      "error": null,
+      "secs": 0.9
+    },
+    {
+      "id": 99,
+      "hero": false,
+      "solved": true,
+      "turns": 21,
+      "solution": "R2 D B' R2 U' L U F' D' L' D F2 R2 D2 F2 L2 F2 U B2 U B2",
+      "error": null,
+      "secs": 3.8
+    },
     {
       "id": 100,
       "hero": false,

@@ -1,7 +1,7 @@
 {
   "key": "gemini",
   "ok": true,
-  "n_cubes": 200,
+  "n_cubes": 300,
   "n_solved": 0,
   "solve_rate": 0.0,
   "hero_solved": false,
@@ -13,6 +13,906 @@
   "n_timeout": 0,
   "max_secs": 1.8,
   "results": [
+    {
+      "id": 0,
+      "hero": true,
+      "solved": false,
+      "turns": null,
+      "solution": null,
+      "error": "IndexError: list index out of range",
+      "secs": 1.78
+    },
+    {
+      "id": 1,
+      "hero": false,
+      "solved": false,
+      "turns": null,
+      "solution": null,
+      "error": "TypeError: 'NoneType' object is not subscriptable",
+      "secs": 0.0
+    },
+    {
+      "id": 2,
+      "hero": false,
+      "solved": false,
+      "turns": null,
+      "solution": null,
+      "error": "TypeError: 'NoneType' object is not subscriptable",
+      "secs": 0.0
+    },
+    {
+      "id": 3,
+      "hero": false,
+      "solved": false,
+      "turns": null,
+      "solution": null,
+      "error": "TypeError: 'NoneType' object is not subscriptable",
+      "secs": 0.0
+    },
+    {
+      "id": 4,
+      "hero": false,
+      "solved": false,
+      "turns": null,
+      "solution": null,
+      "error": "TypeError: 'NoneType' object is not subscriptable",
+      "secs": 0.0
+    },
+    {
+      "id": 5,
+      "hero": false,
+      "solved": false,
+      "turns": null,
+      "solution": null,
+      "error": "TypeError: 'NoneType' object is not subscriptable",
+      "secs": 0.0
+    },
+    {
+      "id": 6,
+      "hero": false,
+      "solved": false,
+      "turns": null,
+      "solution": null,
+      "error": "TypeError: 'NoneType' object is not subscriptable",
+      "secs": 0.0
+    },
+    {
+      "id": 7,
+      "hero": false,
+      "solved": false,
+      "turns": null,
+      "solution": null,
+      "error": "TypeError: 'NoneType' object is not subscriptable",
+      "secs": 0.0
+    },
+    {
+      "id": 8,
+      "hero": false,
+      "solved": false,
+      "turns": null,
+      "solution": null,
+      "error": "TypeError: 'NoneType' object is not subscriptable",
+      "secs": 0.0
+    },
+    {
+      "id": 9,
+      "hero": false,
+      "solved": false,
+      "turns": null,
+      "solution": null,
+      "error": "TypeError: 'NoneType' object is not subscriptable",
+      "secs": 0.0
+    },
+    {
+      "id": 10,
+      "hero": false,
+      "solved": false,
+      "turns": null,
+      "solution": null,
+      "error": "TypeError: 'NoneType' object is not subscriptable",
+      "secs": 0.0
+    },
+    {
+      "id": 11,
+      "hero": false,
+      "solved": false,
+      "turns": null,
+      "solution": null,
+      "error": "TypeError: 'NoneType' object is not subscriptable",
+      "secs": 0.0
+    },
+    {
+      "id": 12,
+      "hero": false,
+      "solved": false,
+      "turns": null,
+      "solution": null,
+      "error": "TypeError: 'NoneType' object is not subscriptable",
+      "secs": 0.0
+    },
+    {
+      "id": 13,
+      "hero": false,
+      "solved": false,
+      "turns": null,
+      "solution": null,
+      "error": "TypeError: 'NoneType' object is not subscriptable",
+      "secs": 0.0
+    },
+    {
+      "id": 14,
+      "hero": false,
+      "solved": false,
+      "turns": null,
+      "solution": null,
+      "error": "TypeError: 'NoneType' object is not subscriptable",
+      "secs": 0.0
+    },
+    {
+      "id": 15,
+      "hero": false,
+      "solved": false,
+      "turns": null,
+      "solution": null,
+      "error": "TypeError: 'NoneType' object is not subscriptable",
+      "secs": 0.0
+    },
+    {
+      "id": 16,
+      "hero": false,
+      "solved": false,
+      "turns": null,
+      "solution": null,
+      "error": "TypeError: 'NoneType' object is not subscriptable",
+      "secs": 0.0
+    },
+    {
+      "id": 17,
+      "hero": false,
+      "solved": false,
+      "turns": null,
+      "solution": null,
+      "error": "TypeError: 'NoneType' object is not subscriptable",
+      "secs": 0.0
+    },
+    {
+      "id": 18,
+      "hero": false,
+      "solved": false,
+      "turns": null,
+      "solution": null,
+      "error": "TypeError: 'NoneType' object is not subscriptable",
+      "secs": 0.0
+    },
+    {
+      "id": 19,
+      "hero": false,
+      "solved": false,
+      "turns": null,
+      "solution": null,
+      "error": "TypeError: 'NoneType' object is not subscriptable",
+      "secs": 0.0
+    },
+    {
+      "id": 20,
+      "hero": false,
+      "solved": false,
+      "turns": null,
+      "solution": null,
+      "error": "TypeError: 'NoneType' object is not subscriptable",
+      "secs": 0.0
+    },
+    {
+      "id": 21,
+      "hero": false,
+      "solved": false,
+      "turns": null,
+      "solution": null,
+      "error": "TypeError: 'NoneType' object is not subscriptable",
+      "secs": 0.0
+    },
+    {
+      "id": 22,
+      "hero": false,
+      "solved": false,
+      "turns": null,
+      "solution": null,
+      "error": "TypeError: 'NoneType' object is not subscriptable",
+      "secs": 0.0
+    },
+    {
+      "id": 23,
+      "hero": false,
+      "solved": false,
+      "turns": null,
+      "solution": null,
+      "error": "TypeError: 'NoneType' object is not subscriptable",
+      "secs": 0.0
+    },
+    {
+      "id": 24,
+      "hero": false,
+      "solved": false,
+      "turns": null,
+      "solution": null,
+      "error": "TypeError: 'NoneType' object is not subscriptable",
+      "secs": 0.0
+    },
+    {
+      "id": 25,
+      "hero": false,
+      "solved": false,
+      "turns": null,
+      "solution": null,
+      "error": "TypeError: 'NoneType' object is not subscriptable",
+      "secs": 0.0
+    },
+    {
+      "id": 26,
+      "hero": false,
+      "solved": false,
+      "turns": null,
+      "solution": null,
+      "error": "TypeError: 'NoneType' object is not subscriptable",
+      "secs": 0.0
+    },
+    {
+      "id": 27,
+      "hero": false,
+      "solved": false,
+      "turns": null,
+      "solution": null,
+      "error": "TypeError: 'NoneType' object is not subscriptable",
+      "secs": 0.0
+    },
+    {
+      "id": 28,
+      "hero": false,
+      "solved": false,
+      "turns": null,
+      "solution": null,
+      "error": "TypeError: 'NoneType' object is not subscriptable",
+      "secs": 0.0
+    },
+    {
+      "id": 29,
+      "hero": false,
+      "solved": false,
+      "turns": null,
+      "solution": null,
+      "error": "TypeError: 'NoneType' object is not subscriptable",
+      "secs": 0.0
+    },
+    {
+      "id": 30,
+      "hero": false,
+      "solved": false,
+      "turns": null,
+      "solution": null,
+      "error": "TypeError: 'NoneType' object is not subscriptable",
+      "secs": 0.0
+    },
+    {
+      "id": 31,
+      "hero": false,
+      "solved": false,
+      "turns": null,
+      "solution": null,
+      "error": "TypeError: 'NoneType' object is not subscriptable",
+      "secs": 0.0
+    },
+    {
+      "id": 32,
+      "hero": false,
+      "solved": false,
+      "turns": null,
+      "solution": null,
+      "error": "TypeError: 'NoneType' object is not subscriptable",
+      "secs": 0.0
+    },
+    {
+      "id": 33,
+      "hero": false,
+      "solved": false,
+      "turns": null,
+      "solution": null,
+      "error": "TypeError: 'NoneType' object is not subscriptable",
+      "secs": 0.0
+    },
+    {
+      "id": 34,
+      "hero": false,
+      "solved": false,
+      "turns": null,
+      "solution": null,
+      "error": "TypeError: 'NoneType' object is not subscriptable",
+      "secs": 0.0
+    },
+    {
+      "id": 35,
+      "hero": false,
+      "solved": false,
+      "turns": null,
+      "solution": null,
+      "error": "TypeError: 'NoneType' object is not subscriptable",
+      "secs": 0.0
+    },
+    {
+      "id": 36,
+      "hero": false,
+      "solved": false,
+      "turns": null,
+      "solution": null,
+      "error": "TypeError: 'NoneType' object is not subscriptable",
+      "secs": 0.0
+    },
+    {
+      "id": 37,
+      "hero": false,
+      "solved": false,
+      "turns": null,
+      "solution": null,
+      "error": "TypeError: 'NoneType' object is not subscriptable",
+      "secs": 0.0
+    },
+    {
+      "id": 38,
+      "hero": false,
+      "solved": false,
+      "turns": null,
+      "solution": null,
+      "error": "TypeError: 'NoneType' object is not subscriptable",
+      "secs": 0.0
+    },
+    {
+      "id": 39,
+      "hero": false,
+      "solved": false,
+      "turns": null,
+      "solution": null,
+      "error": "TypeError: 'NoneType' object is not subscriptable",
+      "secs": 0.0
+    },
+    {
+      "id": 40,
+      "hero": false,
+      "solved": false,
+      "turns": null,
+      "solution": null,
+      "error": "TypeError: 'NoneType' object is not subscriptable",
+      "secs": 0.0
+    },
+    {
+      "id": 41,
+      "hero": false,
+      "solved": false,
+      "turns": null,
+      "solution": null,
+      "error": "TypeError: 'NoneType' object is not subscriptable",
+      "secs": 0.0
+    },
+    {
+      "id": 42,
+      "hero": false,
+      "solved": false,
+      "turns": null,
+      "solution": null,
+      "error": "TypeError: 'NoneType' object is not subscriptable",
+      "secs": 0.0
+    },
+    {
+      "id": 43,
+      "hero": false,
+      "solved": false,
+      "turns": null,
+      "solution": null,
+      "error": "TypeError: 'NoneType' object is not subscriptable",
+      "secs": 0.0
+    },
+    {
+      "id": 44,
+      "hero": false,
+      "solved": false,
+      "turns": null,
+      "solution": null,
+      "error": "TypeError: 'NoneType' object is not subscriptable",
+      "secs": 0.0
+    },
+    {
+      "id": 45,
+      "hero": false,
+      "solved": false,
+      "turns": null,
+      "solution": null,
+      "error": "TypeError: 'NoneType' object is not subscriptable",
+      "secs": 0.0
+    },
+    {
+      "id": 46,
+      "hero": false,
+      "solved": false,
+      "turns": null,
+      "solution": null,
+      "error": "TypeError: 'NoneType' object is not subscriptable",
+      "secs": 0.0
+    },
+    {
+      "id": 47,
+      "hero": false,
+      "solved": false,
+      "turns": null,
+      "solution": null,
+      "error": "TypeError: 'NoneType' object is not subscriptable",
+      "secs": 0.0
+    },
+    {
+      "id": 48,
+      "hero": false,
+      "solved": false,
+      "turns": null,
+      "solution": null,
+      "error": "TypeError: 'NoneType' object is not subscriptable",
+      "secs": 0.0
+    },
+    {
+      "id": 49,
+      "hero": false,
+      "solved": false,
+      "turns": null,
+      "solution": null,
+      "error": "TypeError: 'NoneType' object is not subscriptable",
+      "secs": 0.0
+    },
+    {
+      "id": 50,
+      "hero": false,
+      "solved": false,
+      "turns": null,
+      "solution": null,
+      "error": "TypeError: 'NoneType' object is not subscriptable",
+      "secs": 0.0
+    },
+    {
+      "id": 51,
+      "hero": false,
+      "solved": false,
+      "turns": null,
+      "solution": null,
+      "error": "TypeError: 'NoneType' object is not subscriptable",
+      "secs": 0.0
+    },
+    {
+      "id": 52,
+      "hero": false,
+      "solved": false,
+      "turns": null,
+      "solution": null,
+      "error": "TypeError: 'NoneType' object is not subscriptable",
+      "secs": 0.0
+    },
+    {
+      "id": 53,
+      "hero": false,
+      "solved": false,
+      "turns": null,
+      "solution": null,
+      "error": "TypeError: 'NoneType' object is not subscriptable",
+      "secs": 0.0
+    },
+    {
+      "id": 54,
+      "hero": false,
+      "solved": false,
+      "turns": null,
+      "solution": null,
+      "error": "TypeError: 'NoneType' object is not subscriptable",
+      "secs": 0.0
+    },
+    {
+      "id": 55,
+      "hero": false,
+      "solved": false,
+      "turns": null,
+      "solution": null,
+      "error": "TypeError: 'NoneType' object is not subscriptable",
+      "secs": 0.0
+    },
+    {
+      "id": 56,
+      "hero": false,
+      "solved": false,
+      "turns": null,
+      "solution": null,
+      "error": "TypeError: 'NoneType' object is not subscriptable",
+      "secs": 0.0
+    },
+    {
+      "id": 57,
+      "hero": false,
+      "solved": false,
+      "turns": null,
+      "solution": null,
+      "error": "TypeError: 'NoneType' object is not subscriptable",
+      "secs": 0.0
+    },
+    {
+      "id": 58,
+      "hero": false,
+      "solved": false,
+      "turns": null,
+      "solution": null,
+      "error": "TypeError: 'NoneType' object is not subscriptable",
+      "secs": 0.0
+    },
+    {
+      "id": 59,
+      "hero": false,
+      "solved": false,
+      "turns": null,
+      "solution": null,
+      "error": "TypeError: 'NoneType' object is not subscriptable",
+      "secs": 0.0
+    },
+    {
+      "id": 60,
+      "hero": false,
+      "solved": false,
+      "turns": null,
+      "solution": null,
+      "error": "TypeError: 'NoneType' object is not subscriptable",
+      "secs": 0.0
+    },
+    {
+      "id": 61,
+      "hero": false,
+      "solved": false,
+      "turns": null,
+      "solution": null,
+      "error": "TypeError: 'NoneType' object is not subscriptable",
+      "secs": 0.0
+    },
+    {
+      "id": 62,
+      "hero": false,
+      "solved": false,
+      "turns": null,
+      "solution": null,
+      "error": "TypeError: 'NoneType' object is not subscriptable",
+      "secs": 0.0
+    },
+    {
+      "id": 63,
+      "hero": false,
+      "solved": false,
+      "turns": null,
+      "solution": null,
+      "error": "TypeError: 'NoneType' object is not subscriptable",
+      "secs": 0.0
+    },
+    {
+      "id": 64,
+      "hero": false,
+      "solved": false,
+      "turns": null,
+      "solution": null,
+      "error": "TypeError: 'NoneType' object is not subscriptable",
+      "secs": 0.0
+    },
+    {
+      "id": 65,
+      "hero": false,
+      "solved": false,
+      "turns": null,
+      "solution": null,
+      "error": "TypeError: 'NoneType' object is not subscriptable",
+      "secs": 0.0
+    },
+    {
+      "id": 66,
+      "hero": false,
+      "solved": false,
+      "turns": null,
+      "solution": null,
+      "error": "TypeError: 'NoneType' object is not subscriptable",
+      "secs": 0.0
+    },
+    {
+      "id": 67,
+      "hero": false,
+      "solved": false,
+      "turns": null,
+      "solution": null,
+      "error": "TypeError: 'NoneType' object is not subscriptable",
+      "secs": 0.0
+    },
+    {
+      "id": 68,
+      "hero": false,
+      "solved": false,
+      "turns": null,
+      "solution": null,
+      "error": "TypeError: 'NoneType' object is not subscriptable",
+      "secs": 0.0
+    },
+    {
+      "id": 69,
+      "hero": false,
+      "solved": false,
+      "turns": null,
+      "solution": null,
+      "error": "TypeError: 'NoneType' object is not subscriptable",
+      "secs": 0.0
+    },
+    {
+      "id": 70,
+      "hero": false,
+      "solved": false,
+      "turns": null,
+      "solution": null,
+      "error": "TypeError: 'NoneType' object is not subscriptable",
+      "secs": 0.0
+    },
+    {
+      "id": 71,
+      "hero": false,
+      "solved": false,
+      "turns": null,
+      "solution": null,
+      "error": "TypeError: 'NoneType' object is not subscriptable",
+      "secs": 0.0
+    },
+    {
+      "id": 72,
+      "hero": false,
+      "solved": false,
+      "turns": null,
+      "solution": null,
+      "error": "TypeError: 'NoneType' object is not subscriptable",
+      "secs": 0.0
+    },
+    {
+      "id": 73,
+      "hero": false,
+      "solved": false,
+      "turns": null,
+      "solution": null,
+      "error": "TypeError: 'NoneType' object is not subscriptable",
+      "secs": 0.0
+    },
+    {
+      "id": 74,
+      "hero": false,
+      "solved": false,
+      "turns": null,
+      "solution": null,
+      "error": "TypeError: 'NoneType' object is not subscriptable",
+      "secs": 0.0
+    },
+    {
+      "id": 75,
+      "hero": false,
+      "solved": false,
+      "turns": null,
+      "solution": null,
+      "error": "TypeError: 'NoneType' object is not subscriptable",
+      "secs": 0.0
+    },
+    {
+      "id": 76,
+      "hero": false,
+      "solved": false,
+      "turns": null,
+      "solution": null,
+      "error": "TypeError: 'NoneType' object is not subscriptable",
+      "secs": 0.0
+    },
+    {
+      "id": 77,
+      "hero": false,
+      "solved": false,
+      "turns": null,
+      "solution": null,
+      "error": "TypeError: 'NoneType' object is not subscriptable",
+      "secs": 0.0
+    },
+    {
+      "id": 78,
+      "hero": false,
+      "solved": false,
+      "turns": null,
+      "solution": null,
+      "error": "TypeError: 'NoneType' object is not subscriptable",
+      "secs": 0.0
+    },
+    {
+      "id": 79,
+      "hero": false,
+      "solved": false,
+      "turns": null,
+      "solution": null,
+      "error": "TypeError: 'NoneType' object is not subscriptable",
+      "secs": 0.0
+    },
+    {
+      "id": 80,
+      "hero": false,
+      "solved": false,
+      "turns": null,
+      "solution": null,
+      "error": "TypeError: 'NoneType' object is not subscriptable",
+      "secs": 0.0
+    },
+    {
+      "id": 81,
+      "hero": false,
+      "solved": false,
+      "turns": null,
+      "solution": null,
+      "error": "TypeError: 'NoneType' object is not subscriptable",
+      "secs": 0.0
+    },
+    {
+      "id": 82,
+      "hero": false,
+      "solved": false,
+      "turns": null,
+      "solution": null,
+      "error": "TypeError: 'NoneType' object is not subscriptable",
+      "secs": 0.0
+    },
+    {
+      "id": 83,
+      "hero": false,
+      "solved": false,
+      "turns": null,
+      "solution": null,
+      "error": "TypeError: 'NoneType' object is not subscriptable",
+      "secs": 0.0
+    },
+    {
+      "id": 84,
+      "hero": false,
+      "solved": false,
+      "turns": null,
+      "solution": null,
+      "error": "TypeError: 'NoneType' object is not subscriptable",
+      "secs": 0.0
+    },
+    {
+      "id": 85,
+      "hero": false,
+      "solved": false,
+      "turns": null,
+      "solution": null,
+      "error": "TypeError: 'NoneType' object is not subscriptable",
+      "secs": 0.0
+    },
+    {
+      "id": 86,
+      "hero": false,
+      "solved": false,
+      "turns": null,
+      "solution": null,
+      "error": "TypeError: 'NoneType' object is not subscriptable",
+      "secs": 0.0
+    },
+    {
+      "id": 87,
+      "hero": false,
+      "solved": false,
+      "turns": null,
+      "solution": null,
+      "error": "TypeError: 'NoneType' object is not subscriptable",
+      "secs": 0.0
+    },
+    {
+      "id": 88,
+      "hero": false,
+      "solved": false,
+      "turns": null,
+      "solution": null,
+      "error": "TypeError: 'NoneType' object is not subscriptable",
+      "secs": 0.0
+    },
+    {
+      "id": 89,
+      "hero": false,
+      "solved": false,
+      "turns": null,
+      "solution": null,
+      "error": "TypeError: 'NoneType' object is not subscriptable",
+      "secs": 0.0
+    },
+    {
+      "id": 90,
+      "hero": false,
+      "solved": false,
+      "turns": null,
+      "solution": null,
+      "error": "TypeError: 'NoneType' object is not subscriptable",
+      "secs": 0.0
+    },
+    {
+      "id": 91,
+      "hero": false,
+      "solved": false,
+      "turns": null,
+      "solution": null,
+      "error": "TypeError: 'NoneType' object is not subscriptable",
+      "secs": 0.0
+    },
+    {
+      "id": 92,
+      "hero": false,
+      "solved": false,
+      "turns": null,
+      "solution": null,
+      "error": "TypeError: 'NoneType' object is not subscriptable",
+      "secs": 0.0
+    },
+    {
+      "id": 93,
+      "hero": false,
+      "solved": false,
+      "turns": null,
+      "solution": null,
+      "error": "TypeError: 'NoneType' object is not subscriptable",
+      "secs": 0.0
+    },
+    {
+      "id": 94,
+      "hero": false,
+      "solved": false,
+      "turns": null,
+      "solution": null,
+      "error": "TypeError: 'NoneType' object is not subscriptable",
+      "secs": 0.0
+    },
+    {
+      "id": 95,
+      "hero": false,
+      "solved": false,
+      "turns": null,
+      "solution": null,
+      "error": "TypeError: 'NoneType' object is not subscriptable",
+      "secs": 0.0
+    },
+    {
+      "id": 96,
+      "hero": false,
+      "solved": false,
+      "turns": null,
+      "solution": null,
+      "error": "TypeError: 'NoneType' object is not subscriptable",
+      "secs": 0.0
+    },
+    {
+      "id": 97,
+      "hero": false,
+      "solved": false,
+      "turns": null,
+      "solution": null,
+      "error": "TypeError: 'NoneType' object is not subscriptable",
+      "secs": 0.0
+    },
+    {
+      "id": 98,
+      "hero": false,
+      "solved": false,
+      "turns": null,
+      "solution": null,
+      "error": "TypeError: 'NoneType' object is not subscriptable",
+      "secs": 0.0
+    },
+    {
+      "id": 99,
+      "hero": false,
+      "solved": false,
+      "turns": null,
+      "solution": null,
+      "error": "TypeError: 'NoneType' object is not subscriptable",
+      "secs": 0.0
+    },
     {
       "id": 100,
       "hero": false,

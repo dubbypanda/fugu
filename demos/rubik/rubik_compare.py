@@ -181,7 +181,6 @@ def call_fugu():
     resp = client.chat.completions.create(
         model="fugu",
         messages=[{"role": "user", "content": PROMPT}],
-        temperature=0.7,
         max_tokens=64000,
     )
     return resp.choices[0].message.content
@@ -226,27 +225,42 @@ def run_solver(name: str, code: str, cubes):
     solver_file.write_text(code, encoding="utf-8")
 
     overall = PER_CUBE_TIMEOUT * len(cubes) + 120
-    try:
-        proc = subprocess.run(
-            [sys.executable, "-u", str(SOLVER_RUNNER),
-             str(solver_file), str(EVAL_CUBES), str(PER_CUBE_TIMEOUT)],
-            capture_output=True, text=True, timeout=overall,
-        )
-    except subprocess.TimeoutExpired:
-        return None, f"solver subprocess exceeded {overall:g}s overall"
-
+    n_total = len(cubes)
+    step = max(1, n_total // 20)   # report progress roughly every 5%
     raw_out = {}
     contract_fail = None
-    for line in (proc.stdout or "").splitlines():
-        if line.startswith("##R## "):
-            rec = json.loads(line[len("##R## "):])
-            raw_out[rec["id"]] = rec
-        elif line.startswith("##CONTRACT_FAIL## "):
-            contract_fail = line[len("##CONTRACT_FAIL## "):]
+    other = []
+    # Stream the runner's output so we can show live progress over the cubes
+    # (it prints one sentinel line per cube). stderr is merged into stdout to
+    # avoid a pipe-buffer deadlock if a solver is chatty.
+    proc = subprocess.Popen(
+        [sys.executable, "-u", str(SOLVER_RUNNER),
+         str(solver_file), str(EVAL_CUBES), str(PER_CUBE_TIMEOUT)],
+        stdout=subprocess.PIPE, stderr=subprocess.STDOUT, text=True,
+    )
+    try:
+        for line in proc.stdout:
+            line = line.rstrip("\n")
+            if line.startswith("##R## "):
+                rec = json.loads(line[len("##R## "):])
+                raw_out[rec["id"]] = rec
+                done = len(raw_out)
+                if done == n_total or done % step == 0:
+                    log(f"[{name}] solved {done}/{n_total} cubes "
+                        f"({100 * done // n_total}%)")
+            elif line.startswith("##CONTRACT_FAIL## "):
+                contract_fail = line[len("##CONTRACT_FAIL## "):]
+            elif line.strip():
+                other.append(line)
+        proc.wait(timeout=overall)
+    except subprocess.TimeoutExpired:
+        proc.kill()
+        return None, f"solver subprocess exceeded {overall:g}s overall"
+
     if contract_fail:
         return None, f"contract fail: {contract_fail}"
     if not raw_out:
-        err_tail = " | ".join((proc.stderr or "").strip().splitlines()[-2:])
+        err_tail = " | ".join(other[-2:])
         return None, f"no results (stderr: {err_tail[:200]})"
 
     results = []
