@@ -1,0 +1,38 @@
+TASK
+Create a high-quality single HTML file simulation of a Rube Goldberg / chain-reaction machine. The simulation should run automatically from start to finish without user input.The goal is to demonstrate whether the coding model understands real-world physics well enough to create believable cause-and-effect behavior - Rube Goldberg / chain-reaction machine.
+
+The scene should show a small physical world where objects interact through realistic mechanics: gravity, collisions, momentum transfer, ramps, pulleys, levers, springs, falling objects, rolling balls, dominoes, and water or particles if possible.
+
+The simulation should include:
+* A ball rolling down a ramp
+* Dominoes falling one after another
+* A lever or seesaw transferring force
+* A spring launcher
+* A pendulum or swinging weight
+* A pulley or elevator mechanism
+* Falling objects affected by gravity
+* Objects with different mass, friction, and bounce
+* Clear visual labels explaining what physical law is being demonstrated
+* A progress timeline showing the current stage of the chain reaction
+* Automatic reset/replay after the sequence ends
+
+The simulation should visually demonstrate:
+* Gravity
+* Momentum transfer
+* Conservation of energy
+* Friction
+* Torque
+* Elastic potential energy
+* Collision response
+* Cause and effect
+
+The model should not just animate objects on fixed paths. Objects should appear to interact physically. For example, the ball should knock over dominoes, dominoes should push a lever, the lever should launch another object, and so on.
+
+Evaluation criteria
+1. Does the simulation run automatically without user input?
+2. Do objects interact through believable physical cause and effect?
+3. Are physical laws represented correctly?
+4. Are labels and UI helpful?
+5. Is the animation smooth and stable?
+6. Does the code avoid fake-looking hardcoded movement?
+7. Does the scene reset cleanly?
