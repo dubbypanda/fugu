@@ -31,9 +31,15 @@ single solver, e.g. `python3 rerun_saved.py fugu`.
 another LLM). Set the relevant key first, then:
 
 ```bash
-export FUGU_API_KEY=...               # Fugu / Fugu-Ultra (OpenAI-compatible)
-python3 rubik_compare.py              # all models
-python3 rubik_compare.py fugu_ultra   # a single model
+# Set the key for each model you run (each provider reads its own env var;
+# you only need the key(s) for the model(s) you actually run):
+export FUGU_API_KEY=...        # Fugu / Fugu-Ultra (OpenAI-compatible)
+export OPENAI_API_KEY=...      # GPT-5.5
+export ANTHROPIC_API_KEY=...   # Opus 4.8 / Fable 5
+export GEMINI_API_KEY=...      # Gemini 3.1 Pro
+
+python3 rubik_compare.py fugu_ultra   # a single model (needs only its own key)
+python3 rubik_compare.py              # all models (needs all four keys above)
 ```
 
 `rubik_compare.py` sends `prompt.txt` to the model, saves the returned solver to
