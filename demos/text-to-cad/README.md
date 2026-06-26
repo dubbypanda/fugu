@@ -178,30 +178,3 @@ Run with a different prompt file:
 ```bash
 .venv/bin/python run_codex.py --prompt prompts/my-task.txt fugu_ultra gpt55
 ```
-
-## Layout
-
-```text
-.env.example        Environment variable template.
-models.toml         Benchmark-local model/provider config.
-prompt.txt          Default mechanical iris prompt.
-setup.sh            Convenience setup for .env, CAD runtime, and Fugu Codex support.
-run_codex.py        Live Codex harness; writes frozen model.py files.
-model_runner.py     Subprocess runner for one frozen model.py.
-rerun_saved.py      Rebuild STEP artifacts from frozen model.py files.
-render_compare.py   Render STEP orbit GIFs and compose a comparison GIF.
-skills/cad/         Vendored CAD generation, validation, and snapshot skill.
-packages/cadpy/     Vendored CAD helper runtime used by the CAD skill.
-results/            Frozen model outputs, one directory per live run.
-```
-
-The CAD skill and `cadpy` helper runtime are vendored in this directory. Live
-Codex runs copy this directory into an isolated `/tmp` workspace, symlink the
-local `.venv` when present, and copy only `results/<run-id>/<model>` back.
-
-## Files To Commit
-
-Commit the harness, prompt, config, and frozen
-`results/<run-id>/<model>/model.py` files you want to keep. Do not commit live
-workspaces, CAD artifacts, logs, rendered GIFs, or `.env`; they are ignored by
-default.
