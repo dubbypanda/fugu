@@ -24,8 +24,8 @@ See the screenshot below for an configuration example where only Claude (=Opus 4
 
 ## Results
 
-All results are generated one-shot in Codex.
-We asked GPT 5.5 to review the artifacts and the code. The following is the review.
+**All results are generated one-shot in Codex.
+We asked GPT 5.5 to review the artifacts and the code. The following is the review.**
 
 Overall, none of the completed controllers fully satisfies the prompt. The main
 failure mode is not XML tampering or hidden external forces; it is that the
