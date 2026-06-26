@@ -114,3 +114,5 @@ A single HTML file Crossy Road style game in Three.js. The player hops a charact
 Credit: [@KinasRemek](https://x.com/KinasRemek)
 
 A single HTML file chain-reaction machine that plays out on its own with no input. It links a rolling ball, falling dominoes, a lever, a spring launcher, a pendulum, and a pulley to test whether each model models real physics rather than faking the motion on fixed paths.
+
+ The reproduced results for all six demos are available in the [user-demo-v1 release](https://github.com/SakanaAI/fugu/releases/tag/user-demo-v1).
