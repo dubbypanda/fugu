@@ -1,0 +1,1 @@
+build a complete live Trader Desk with both frontend and backend components, real-time market data fetched from external APIs for 8 symbols, and a custom dark-theme UI.
