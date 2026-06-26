@@ -17,3 +17,7 @@ temp/
 
 # MuJoCo/runtime scratch files
 *.mjb
+
+# Keep local videos out of GitHub; README uses GIF previews instead.
+*.mp4
+*_thumb.png

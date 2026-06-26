@@ -41,9 +41,7 @@ generation hides the true dynamics.
 
 ### fugu_ultra
 
-Video: [fugu_ultra/artifacts/g1_dcm_march_10s_640x480.mp4](fugu_ultra/artifacts/g1_dcm_march_10s_640x480.mp4)
-
-<video src="fugu_ultra/artifacts/g1_dcm_march_10s_640x480.mp4" width="640" height="480" autoplay loop muted playsinline controls></video>
+![fugu_ultra walking preview](fugu_ultra/artifacts/g1_dcm_march_preview.gif)
 
 - Cheat assessment: no obvious cheating found in the verified artifact path.
   The Menagerie `g1.xml` matches the other downloaded copies byte-for-byte, the
@@ -59,9 +57,7 @@ Video: [fugu_ultra/artifacts/g1_dcm_march_10s_640x480.mp4](fugu_ultra/artifacts/
 
 ### fugu
 
-Video: [fugu/artifacts/g1_walk_10s_640x480.mp4](fugu/artifacts/g1_walk_10s_640x480.mp4)
-
-<video src="fugu/artifacts/g1_walk_10s_640x480.mp4" width="640" height="480" autoplay loop muted playsinline controls></video>
+![fugu walking preview](fugu/artifacts/g1_walk_preview.gif)
 
 - Cheat assessment: no obvious cheating found. The controller uses the downloaded
   MuJoCo Menagerie G1 model as-is, writes joint position targets through
@@ -75,9 +71,7 @@ Video: [fugu/artifacts/g1_walk_10s_640x480.mp4](fugu/artifacts/g1_walk_10s_640x4
 
 ### gpt
 
-Video: [gpt/artifacts/g1_walk_10s.mp4](gpt/artifacts/g1_walk_10s.mp4)
-
-<video src="gpt/artifacts/g1_walk_10s.mp4" width="640" height="480" autoplay loop muted playsinline controls></video>
+![gpt walking preview](gpt/artifacts/g1_walk_preview.gif)
 
 - Cheat assessment: no obvious external-force or XML-actuator-property cheating
   found. The README is also candid that the controller misses the requested
@@ -90,9 +84,7 @@ Video: [gpt/artifacts/g1_walk_10s.mp4](gpt/artifacts/g1_walk_10s.mp4)
 
 ### gemini
 
-Video: [gemini/artifacts/g1_walk_10s_640x480.mp4](gemini/artifacts/g1_walk_10s_640x480.mp4)
-
-<video src="gemini/artifacts/g1_walk_10s_640x480.mp4" width="640" height="480" autoplay loop muted playsinline controls></video>
+![gemini walking preview](gemini/artifacts/g1_walk_preview.gif)
 
 - Cheat assessment: no obvious external-force cheating or model XML actuator
   edits found. It uses the Unitree torque-actuator model and writes motor torque
@@ -108,9 +100,7 @@ Video: [gemini/artifacts/g1_walk_10s_640x480.mp4](gemini/artifacts/g1_walk_10s_6
 
 ### opus
 
-Video: [opus/outputs/g1_walk_10s_640x480.mp4](opus/outputs/g1_walk_10s_640x480.mp4)
-
-<video src="opus/outputs/g1_walk_10s_640x480.mp4" width="640" height="480" autoplay loop muted playsinline controls></video>
+![opus walking preview](opus/outputs/g1_walk_preview.gif)
 
 - Cheat assessment: disqualified for artifact manipulation. The default script
   renders a 10-second video from 20 seconds of simulation by sampling frame times
