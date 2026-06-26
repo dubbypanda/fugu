@@ -1,0 +1,44 @@
+# Benchmark-local model configuration.
+# The harness reads this file and passes one-shot `codex -c ...` overrides.
+# It does not edit ~/.codex/config.toml.
+
+default_models = [
+  "fugu_ultra",
+  "fugu",
+  "gpt55",
+  "opus48",
+  "gemini",
+]
+
+[providers.openrouter]
+name = "OpenRouter"
+base_url = "https://openrouter.ai/api/v1"
+env_key = "OPENROUTER_API_KEY"
+wire_api = "responses"
+
+[models.fugu_ultra]
+provider = "fugu"
+profile = "fugu"
+model = "fugu-ultra"
+env_key = "SAKANA_API_KEY"
+
+[models.fugu]
+provider = "fugu"
+profile = "fugu"
+model = "fugu"
+env_key = "SAKANA_API_KEY"
+
+[models.gpt55]
+provider = "openrouter"
+model = "openai/gpt-5.5"
+reasoning_effort = "xhigh"
+
+[models.opus48]
+provider = "openrouter"
+model = "anthropic/claude-opus-4.8"
+reasoning_effort = "max"
+
+[models.gemini]
+provider = "openrouter"
+model = "google/gemini-3.1-pro-preview"
+reasoning_effort = "high"

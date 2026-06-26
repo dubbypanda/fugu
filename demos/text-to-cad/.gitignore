@@ -1,0 +1,33 @@
+__pycache__/
+*.py[cod]
+*.egg-info/
+.env
+.venv/
+.pytest_cache/
+
+# Live and replay outputs.
+runs/
+workspaces/
+
+# Keep frozen model.py files reviewable; keep generated CAD/video artifacts out.
+results/**/artifacts/
+results/**/last_message.md
+results/**/stdout.log
+results/**/summary.json
+results/**/*.step
+results/**/*.stp
+results/**/*.stl
+results/**/*.3mf
+results/**/*.glb
+results/**/*.gltf
+results/**/*.obj
+results/**/*.ply
+results/**/*.gif
+results/**/*.mp4
+results/**/*.png
+
+# Commit only the curated demo preview under results.
+!results/.gitkeep
+!results/20260625T115843.845Z/
+results/20260625T115843.845Z/*
+!results/20260625T115843.845Z/compare_2x2.gif

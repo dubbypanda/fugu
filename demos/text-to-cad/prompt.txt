@@ -1,0 +1,14 @@
+Create a mechanical iris as a CAD assembly.
+
+It must define exactly this function:
+
+    def build(output_dir) -> dict:
+
+where output_dir is a string or pathlib.Path. The function must create output_dir
+if needed, generate CAD geometry, write at least one STEP file into output_dir,
+and return a JSON-serializable dict describing the generated files.
+
+Use millimeters. Prefer build123d if available. The module should be runnable
+with:
+
+    python model.py /path/to/output_dir
