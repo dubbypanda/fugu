@@ -12,7 +12,7 @@ This demo compares two agents on the **identical** task and seed:
 - **Fugu Ultra** (xhigh)
 - **GPT-5.5** (xhigh)
 
-In this comparison run, each model generated 5 generations of 10 candidates each, both at xhigh reasoning effort under the same Codex harness. As the figure below shows, Fugu Ultra discovers fast kernels 4.6× more effectively than GPT-5.5 for only 0.6× more cost.
+In this comparison run, each model generated 5 generations, 10 candidates for gpt5.5 and 5 candidates for fugu-ultra, both at xhigh reasoning effort under the same Codex harness. As the figure below shows, Fugu Ultra discovers fast kernels 4.6× more effectively than GPT-5.5 for only 0.6× more cost.
 
 <p align="center">
   <img src="qr_fugu_vs_oai.png" alt="Fugu Ultra (xhigh) vs GPT-5.5 (xhigh) on QR-kernel optimization" width="900">
