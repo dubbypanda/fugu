@@ -6,3 +6,4 @@ model_catalog_json = "{{CODEX_HOME}}/fugu.json"
 [features]
 image_generation = false
 apps = false
+remote_plugin = false

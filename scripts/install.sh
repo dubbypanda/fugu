@@ -2,6 +2,7 @@
 set -euo pipefail
 
 readonly OFFICIAL_INSTALL_URL="https://chatgpt.com/codex/install.sh"
+readonly RELEASE_INSTALL_BASE="https://github.com/openai/codex/releases/download"
 readonly GH_LATEST_API="https://api.github.com/repos/openai/codex/releases/latest"
 readonly NPM_REGISTRY_URL="https://registry.npmjs.org/@openai/codex"
 readonly SUPPORT_URL="https://console.sakana.ai/get-started"
@@ -94,6 +95,8 @@ http_get() {
     wget -qO- --timeout=30 "$url"
   fi
 }
+
+release_installer_url() { printf '%s/rust-v%s/install.sh' "$RELEASE_INSTALL_BASE" "$1"; }
 
 print_usage() {
   cat <<EOF
@@ -229,6 +232,33 @@ verify_installed_version() {
   fi
 }
 
+explain_install_failure() {
+  local version="$1" rc="$2" out="$3" src="$4" _self
+  _self="$(cd "$(dirname "${BASH_SOURCE[0]}")" 2>/dev/null && pwd || echo .)/$(basename "${BASH_SOURCE[0]}")"
+  log_warn "Codex ${version} install failed: the official installer (${src}) exited ${rc}. Its own output is above."
+  case "$out" in
+    *codex-code-mode-host* | *"chmod:"*)
+      log_warn "Cause: the installer tried to set permissions on a file that the Codex ${version} package does not contain."
+      log_warn "This is an upstream installer/packaging mismatch — not a network, rate-limit, permissions, or Fugu config problem."
+      log_info "Fugu installs each pinned Codex with that release's own installer, so please report this with the output above: ${SUPPORT_URL}"
+      ;;
+    *"Could not fetch GitHub release metadata"* | *"rate limit"* | *"rate limited"*)
+      log_warn "Cause: GitHub could not serve the release metadata (typically an API rate limit). This one IS transient."
+      log_info "Wait a few minutes, then retry with:  bash ${_self}"
+      ;;
+    *"Could not find Codex package"*)
+      log_warn "Cause: the installer could not resolve the release assets for Codex ${version}."
+      log_warn "Usually this is GitHub rate-limiting the lookup — its unauthenticated API allows only 60 requests/hour per IP — which is transient. Less often, the release genuinely ships no package for this platform."
+      log_info "Wait a few minutes, then retry with:  bash ${_self}"
+      ;;
+    *)
+      log_warn "Fugu could not classify this failure; the installer's own output above is the authoritative error."
+      ;;
+  esac
+  log_info "Nothing was deployed and your existing Codex config was not modified (any pre-switch backup is shown above)."
+  die "Codex install aborted. More help: ${SUPPORT_URL}"
+}
+
 install_codex() {
   local version="$1"
   log_info "Installing Codex CLI ${version} via the official installer…"
@@ -241,22 +271,29 @@ install_codex() {
   export TMPDIR="${TMPDIR:-/tmp}"
   export CODEX_NON_INTERACTIVE=1
 
-  local _ic_rc=0
+  local _ic_rc=0 _ic_out="" _ic_src=""
   if [ -n "${CODEX_INSTALLER_CMD:-}" ]; then
-    CODEX_RELEASE="$version" "$CODEX_INSTALLER_CMD" "$version" || _ic_rc=$?
-  elif [ "$HTTP_TOOL" = "curl" ]; then
-    curl -fsSL "$OFFICIAL_INSTALL_URL" | sh -s -- --release "$version" || _ic_rc=$?
+    _ic_src="test-hook"
+    _ic_out="$(CODEX_RELEASE="$version" "$CODEX_INSTALLER_CMD" "$version" 2>&1)" || _ic_rc=$?
+    if [ -n "$_ic_out" ]; then printf '%s\n' "$_ic_out" >&2; fi
   else
-    wget -qO- "$OFFICIAL_INSTALL_URL" | sh -s -- --release "$version" || _ic_rc=$?
+    local _sh="${TMPDIR}/fugu-codex-installer.$$.sh" _log="${TMPDIR}/fugu-codex-installer.$$.log"
+    if http_get "$(release_installer_url "$version")" > "$_sh" 2>/dev/null && [ -s "$_sh" ]; then
+      _ic_src="rust-v${version}"
+    elif http_get "$OFFICIAL_INSTALL_URL" > "$_sh" 2>/dev/null && [ -s "$_sh" ]; then
+      _ic_src="latest"
+      log_warn "Codex ${version} publishes no installer of its own; falling back to the latest official installer."
+      log_warn "That installer is not guaranteed to support this pinned version — if the install fails, this is the likely cause."
+    else
+      rm -f "$_sh"
+      die "Could not download a Codex installer for ${version}. Check your network and retry. More help: ${SUPPORT_URL}"
+    fi
+    if sh "$_sh" --release "$version" </dev/null 2>&1 | tee "$_log" >&2; then _ic_rc=0; else _ic_rc=$?; fi
+    _ic_out="$(cat "$_log" 2>/dev/null || true)"
+    rm -f "$_sh" "$_log"
   fi
   if [ "$_ic_rc" -ne 0 ]; then
-    log_warn "Codex ${version} install failed: the official installer could not download or resolve its release assets (exit ${_ic_rc})."
-    log_warn "This is usually a transient GitHub API rate-limit or network hiccup, not a Fugu config problem."
-    log_info "Nothing was deployed and your existing Codex config was not modified (any pre-switch backup is shown above)."
-    local _self; _self="$(cd "$(dirname "${BASH_SOURCE[0]}")" 2>/dev/null && pwd || echo .)/$(basename "${BASH_SOURCE[0]}")"
-    log_info "Wait a few minutes, then retry with:  bash ${_self}"
-    log_info "Or install Codex ${version} yourself (e.g. 'npm install -g @openai/codex@${version}', Homebrew, or the docs at https://developers.openai.com/codex), then re-run 'bash ${_self}' to deploy without the download."
-    die "Codex install aborted. More help: ${SUPPORT_URL}"
+    explain_install_failure "$version" "$_ic_rc" "$_ic_out" "$_ic_src"
   fi
 
   hash -r 2>/dev/null || true
