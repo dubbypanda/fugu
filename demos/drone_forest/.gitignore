@@ -1,0 +1,23 @@
+.DS_Store
+
+# Python caches and virtual environments
+__pycache__/
+*.py[cod]
+.venv/
+*/.venv/
+
+# Local logs and temporary files
+*.log
+*.tmp
+tmp/
+temp/
+
+# MuJoCo runtime scratch (env.py writes a per-run scene xml next to the airframe)
+assets/skydio_x2/_scene_*.xml
+*.mjb
+
+# Grader output written locally
+results/
+
+# Keep heavy videos out of GitHub; the README uses GIF previews instead.
+*.mp4
