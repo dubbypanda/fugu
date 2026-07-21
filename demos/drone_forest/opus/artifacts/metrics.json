@@ -1,0 +1,171 @@
+{
+  "model": "Opus 4.8",
+  "protocol": "agentic; isolated anti-cheat box",
+  "survivability_rule_N": 200.0,
+  "reaches_intact": "0/20",
+  "mean_score": 7.16,
+  "max_impact_N": 320.9,
+  "mean_collisions": 3.7,
+  "per_field": [
+    {
+      "id": 0,
+      "reached": false,
+      "collisions": 1,
+      "peak_force_N": 247.7,
+      "destroyed": true,
+      "score": 4.89
+    },
+    {
+      "id": 1,
+      "reached": false,
+      "collisions": 5,
+      "peak_force_N": 201.2,
+      "destroyed": true,
+      "score": 7.37
+    },
+    {
+      "id": 2,
+      "reached": false,
+      "collisions": 4,
+      "peak_force_N": 229.0,
+      "destroyed": true,
+      "score": 7.29
+    },
+    {
+      "id": 3,
+      "reached": false,
+      "collisions": 3,
+      "peak_force_N": 311.2,
+      "destroyed": true,
+      "score": 6.09
+    },
+    {
+      "id": 4,
+      "reached": false,
+      "collisions": 2,
+      "peak_force_N": 234.2,
+      "destroyed": true,
+      "score": 6.34
+    },
+    {
+      "id": 5,
+      "reached": false,
+      "collisions": 5,
+      "peak_force_N": 262.0,
+      "destroyed": true,
+      "score": 8.03
+    },
+    {
+      "id": 6,
+      "reached": false,
+      "collisions": 3,
+      "peak_force_N": 235.8,
+      "destroyed": true,
+      "score": 6.59
+    },
+    {
+      "id": 7,
+      "reached": false,
+      "collisions": 4,
+      "peak_force_N": 236.5,
+      "destroyed": true,
+      "score": 6.15
+    },
+    {
+      "id": 8,
+      "reached": false,
+      "collisions": 4,
+      "peak_force_N": 320.9,
+      "destroyed": true,
+      "score": 9.02
+    },
+    {
+      "id": 9,
+      "reached": false,
+      "collisions": 2,
+      "peak_force_N": 234.5,
+      "destroyed": true,
+      "score": 5.3
+    },
+    {
+      "id": 10,
+      "reached": false,
+      "collisions": 6,
+      "peak_force_N": 207.2,
+      "destroyed": true,
+      "score": 8.25
+    },
+    {
+      "id": 11,
+      "reached": false,
+      "collisions": 8,
+      "peak_force_N": 207.4,
+      "destroyed": true,
+      "score": 9.84
+    },
+    {
+      "id": 12,
+      "reached": false,
+      "collisions": 8,
+      "peak_force_N": 278.0,
+      "destroyed": true,
+      "score": 14.05
+    },
+    {
+      "id": 13,
+      "reached": false,
+      "collisions": 1,
+      "peak_force_N": 203.7,
+      "destroyed": true,
+      "score": 5.02
+    },
+    {
+      "id": 14,
+      "reached": false,
+      "collisions": 1,
+      "peak_force_N": 236.5,
+      "destroyed": true,
+      "score": 6.0
+    },
+    {
+      "id": 15,
+      "reached": false,
+      "collisions": 4,
+      "peak_force_N": 203.5,
+      "destroyed": true,
+      "score": 7.06
+    },
+    {
+      "id": 16,
+      "reached": false,
+      "collisions": 2,
+      "peak_force_N": 226.9,
+      "destroyed": true,
+      "score": 5.47
+    },
+    {
+      "id": 17,
+      "reached": false,
+      "collisions": 1,
+      "peak_force_N": 246.0,
+      "destroyed": true,
+      "score": 6.15
+    },
+    {
+      "id": 18,
+      "reached": false,
+      "collisions": 9,
+      "peak_force_N": 260.9,
+      "destroyed": true,
+      "score": 8.03
+    },
+    {
+      "id": 19,
+      "reached": false,
+      "collisions": 1,
+      "peak_force_N": 210.2,
+      "destroyed": true,
+      "score": 6.21
+    }
+  ]
+}

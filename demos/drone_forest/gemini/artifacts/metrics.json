@@ -1,0 +1,171 @@
+{
+  "model": "Gemini 3.1 Pro",
+  "protocol": "agentic; isolated anti-cheat box",
+  "survivability_rule_N": 200.0,
+  "reaches_intact": "1/20",
+  "mean_score": 19.78,
+  "max_impact_N": 483.1,
+  "mean_collisions": 2.55,
+  "per_field": [
+    {
+      "id": 0,
+      "reached": false,
+      "collisions": 2,
+      "peak_force_N": 389.8,
+      "destroyed": true,
+      "score": 8.06
+    },
+    {
+      "id": 1,
+      "reached": false,
+      "collisions": 5,
+      "peak_force_N": 346.4,
+      "destroyed": true,
+      "score": 13.35
+    },
+    {
+      "id": 2,
+      "reached": false,
+      "collisions": 3,
+      "peak_force_N": 149.1,
+      "destroyed": false,
+      "score": 7.14
+    },
+    {
+      "id": 3,
+      "reached": false,
+      "collisions": 2,
+      "peak_force_N": 410.0,
+      "destroyed": true,
+      "score": 8.3
+    },
+    {
+      "id": 4,
+      "reached": false,
+      "collisions": 1,
+      "peak_force_N": 209.4,
+      "destroyed": true,
+      "score": 9.16
+    },
+    {
+      "id": 5,
+      "reached": false,
+      "collisions": 2,
+      "peak_force_N": 341.4,
+      "destroyed": true,
+      "score": 9.1
+    },
+    {
+      "id": 6,
+      "reached": false,
+      "collisions": 3,
+      "peak_force_N": 324.7,
+      "destroyed": true,
+      "score": 12.48
+    },
+    {
+      "id": 7,
+      "reached": false,
+      "collisions": 3,
+      "peak_force_N": 248.3,
+      "destroyed": true,
+      "score": 7.98
+    },
+    {
+      "id": 8,
+      "reached": false,
+      "collisions": 2,
+      "peak_force_N": 356.8,
+      "destroyed": true,
+      "score": 11.2
+    },
+    {
+      "id": 9,
+      "reached": false,
+      "collisions": 2,
+      "peak_force_N": 387.0,
+      "destroyed": true,
+      "score": 6.34
+    },
+    {
+      "id": 10,
+      "reached": false,
+      "collisions": 2,
+      "peak_force_N": 483.1,
+      "destroyed": true,
+      "score": 25.68
+    },
+    {
+      "id": 11,
+      "reached": false,
+      "collisions": 1,
+      "peak_force_N": 368.9,
+      "destroyed": true,
+      "score": 15.66
+    },
+    {
+      "id": 12,
+      "reached": false,
+      "collisions": 2,
+      "peak_force_N": 157.3,
+      "destroyed": false,
+      "score": 32.36
+    },
+    {
+      "id": 13,
+      "reached": false,
+      "collisions": 3,
+      "peak_force_N": 363.3,
+      "destroyed": true,
+      "score": 6.14
+    },
+    {
+      "id": 14,
+      "reached": false,
+      "collisions": 2,
+      "peak_force_N": 234.4,
+      "destroyed": true,
+      "score": 24.15
+    },
+    {
+      "id": 15,
+      "reached": false,
+      "collisions": 1,
+      "peak_force_N": 207.3,
+      "destroyed": true,
+      "score": 12.12
+    },
+    {
+      "id": 16,
+      "reached": true,
+      "collisions": 2,
+      "peak_force_N": 84.0,
+      "destroyed": false,
+      "score": 130.17
+    },
+    {
+      "id": 17,
+      "reached": false,
+      "collisions": 3,
+      "peak_force_N": 403.0,
+      "destroyed": true,
+      "score": 17.78
+    },
+    {
+      "id": 18,
+      "reached": false,
+      "collisions": 9,
+      "peak_force_N": 257.7,
+      "destroyed": true,
+      "score": 25.04
+    },
+    {
+      "id": 19,
+      "reached": false,
+      "collisions": 1,
+      "peak_force_N": 396.7,
+      "destroyed": true,
+      "score": 13.45
+    }
+  ]
+}
