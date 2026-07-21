@@ -7,11 +7,11 @@
       "supported_reasoning_levels": [
         {
           "effort": "high",
-          "description": "Deep reasoning for complex problems"
+          "description": "default reasoning effort to balance speed and performance"
         },
         {
           "effort": "xhigh",
-          "description": "Go Brrrr for complex problems"
+          "description": "deep reasoning for complex problem"
         }
       ],
       "shell_type": "shell_command",
@@ -42,11 +42,11 @@
       "supported_reasoning_levels": [
         {
           "effort": "high",
-          "description": "Deep reasoning for complex problems"
+          "description": "default reasoning effort to balance speed and performance"
         },
         {
           "effort": "xhigh",
-          "description": "Go Brrrr for complex problems"
+          "description": "deep reasoning for complex problem"
         }
       ],
       "shell_type": "shell_command",
@@ -77,11 +77,11 @@
       "supported_reasoning_levels": [
         {
           "effort": "high",
-          "description": "Deep reasoning for complex problems"
+          "description": "default reasoning effort to balance speed and performance"
         },
         {
           "effort": "xhigh",
-          "description": "Go Brrrr for complex problems"
+          "description": "deep reasoning for complex problem"
         }
       ],
       "shell_type": "shell_command",
