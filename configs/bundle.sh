@@ -1,6 +1,6 @@
 
 BUNDLE_NAME="configs"
-BUNDLE_DESC="Sakana Fugu models (fugu / fugu-ultra), optimized — stream-resilience hardening + generic agent-conduct base_instructions; use with: codex -p fugu"
+BUNDLE_DESC="Sakana Fugu models (fugu / fugu-ultra / fugu-cyber), optimized — stream-resilience hardening + generic agent-conduct base_instructions; use with: codex -p fugu"
 BUNDLE_SCHEMA=1
 
 BUNDLE_CODEX_VERSION="0.144.4"
