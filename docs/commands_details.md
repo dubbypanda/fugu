@@ -4,37 +4,54 @@ This reference covers the Fugu one-line install, the flags for the installer and
 
 ## The one-line install
 
-The one-line install runs a small bootstrap script served at `https://sakana.ai/fugu/install`. The script clones this repository into `~/.fugu`, then runs `~/.fugu/scripts/install.sh`, which pins Codex, deploys the Fugu config, and stores your API key. Anything you pass after `bash` is forwarded straight to `install.sh`, so every installer flag below also works through the one-line command.
+The one-line install runs a small bootstrap script served at `https://sakana.ai/fugu/install`. The script clones this repository into `~/.fugu`, then asks what to set up, **Codex** (`codex-fugu`), **Claude Code** (`claude-fugu`), or **both**, and runs the matching installer: `~/.fugu/scripts/install.sh` (pins Codex, deploys the Fugu config, stores your API key) and/or `~/.fugu/scripts/install-claude.sh` (installs the Claude launcher, reusing the same key). Choose non-interactively with a `--codex`/`--claude`/`--both` flag or `FUGU_INSTALL_TARGET`; any other flag after `bash` is forwarded to the selected installer, so every installer flag below also works through the one-line command.
 
 ```bash
 curl -fsSL https://sakana.ai/fugu/install | bash
 ```
 
-The bootstrap reads two environment variables of its own. The installer's own variables (`SAKANA_API_KEY`, `CODEX_HOME`, `CODEX_INSTALL_DIR`, and the rest) pass straight through to it.
+The bootstrap reads a few environment variables of its own. The installers' own variables (`SAKANA_API_KEY`, `CODEX_HOME`, `CODEX_INSTALL_DIR`, and the rest) pass straight through.
 
 | Variable | Default | Purpose |
 | --- | --- | --- |
 | `FUGU_REPO_URL` | `https://github.com/SakanaAI/fugu.git` | clone source for the repo |
 | `FUGU_HOME` | `~/.fugu` | directory the repo is cloned into |
+| `FUGU_INSTALL_TARGET` | interactive menu (`codex` when headless) | which agent to install: `codex`, `claude`, or `both` (also `1`/`2`/`3`) |
 
 Common forms:
 
 | Situation | Command |
 | --- | --- |
-| Standard install | `curl -fsSL https://sakana.ai/fugu/install \| bash` |
+| Standard install (menu) | `curl -fsSL https://sakana.ai/fugu/install \| bash` |
+| Claude Code only | `curl -fsSL https://sakana.ai/fugu/install \| bash -s -- --claude` |
+| Both | `curl -fsSL https://sakana.ai/fugu/install \| bash -s -- --both` |
 | Pass installer flags | `curl -fsSL https://sakana.ai/fugu/install \| bash -s -- --yes` |
-| Non-interactive or CI | `curl -fsSL https://sakana.ai/fugu/install \| SAKANA_API_KEY=your_key bash -s -- --yes` |
+| Non-interactive or CI | `curl -fsSL https://sakana.ai/fugu/install \| SAKANA_API_KEY=your_key FUGU_INSTALL_TARGET=both bash -s -- --yes` |
 | Custom clone source | `curl -fsSL https://sakana.ai/fugu/install \| FUGU_REPO_URL=<url-or-path> bash` |
 
-`bash -s --` passes the arguments that follow to the script, so `bash -s -- --yes` runs the installer with `--yes`. Place any environment variable right before `bash` so it reaches the installer rather than `curl`. Re-running the command reuses an existing `~/.fugu`, and ongoing updates are handled by `codex-fugu`, so a re-run is rarely needed.
+`bash -s --` passes the arguments that follow to the script. The bootstrap consumes `--codex`/`--claude`/`--both` to choose the target; every other flag (like `--yes`) goes to the selected installer. Place any environment variable right before `bash` so it reaches the bootstrap rather than `curl`. Re-running the command reuses an existing `~/.fugu`, and ongoing updates are handled by `codex-fugu`, so a re-run is rarely needed.
 
-An equivalent that needs no hosted endpoint and shows exactly what runs:
+**If your first install failed partway through**, re-running the one-liner will not help on its own: it reuses the `~/.fugu` it already cloned, so it runs the same copy of the installer again. Remove the clone and start clean:
 
 ```bash
-( git clone https://github.com/SakanaAI/fugu.git ~/.fugu && bash ~/.fugu/scripts/install.sh )
+rm -rf ~/.fugu && curl -fsSL https://sakana.ai/fugu/install | bash
 ```
 
+To run the same steps without the hosted endpoint (cloning the repository yourself and seeing exactly what runs), clone it once and run the installer for what you want:
+
+```bash
+git clone https://github.com/SakanaAI/fugu.git ~/.fugu
+bash ~/.fugu/scripts/install.sh          # Codex (codex-fugu)
+bash ~/.fugu/scripts/install-claude.sh   # Claude Code (claude-fugu)
+```
+
+To set up both, run `install.sh` first; it stores the API key that `install-claude.sh` then reuses.
+
 ## Installer flags
+
+Two installers ship in the repo: `install.sh` for Codex and `install-claude.sh` for Claude Code. Run either with no flag to install.
+
+### Codex (`install.sh`)
 
 `bash ~/.fugu/scripts/install.sh [flag]`. Run with no flag to install and deploy.
 
@@ -55,7 +72,25 @@ Non-interactive install (for CI or provisioning):
 SAKANA_API_KEY=your_key bash ~/.fugu/scripts/install.sh --yes
 ```
 
+### Claude Code (`install-claude.sh`)
+
+`bash ~/.fugu/scripts/install-claude.sh [flag]`. This installs the `claude-fugu` launcher and stores a Sakana API key; it does not install Codex or deploy any Codex config. With no flag it configures the key (reusing an existing one from `~/.claude/.fugu-env`, or from `~/.codex/.env` if you already set up Codex, otherwise prompting), then installs the launcher to `~/.local/bin/claude-fugu`.
+
+| Flag | What it does |
+| --- | --- |
+| (none) | Configure the Sakana API key, then install the `claude-fugu` launcher |
+| `--set-key` | Reconfigure the stored Sakana API key only; does not install the launcher |
+| `--reconfigure` | During install, overwrite an existing stored key instead of keeping it |
+| `--remove` | Remove the installed `claude-fugu` launcher (the stored key is kept) |
+| `--dry-run` | Show what would happen and change nothing |
+| `-y`, `--yes` | Assume yes, for non-interactive use (a key must already be available) |
+| `-h`, `--help` | Full list of flags and environment variables |
+
+It has no `--remove-config`, `--pinned-version`, `--force`, or `--no-backup`: it deploys no config bundle, never installs or version-pins Codex, and makes no backups.
+
 ## Launcher flags
+
+> **Only `codex-fugu` has launcher flags.** The `claude-fugu` launcher parses none of its own; every argument is forwarded straight to Claude Code (`claude "$@"`). The flags below are `codex-fugu`-only. To reconfigure the Claude key or reinstall its launcher, use `install-claude.sh` (`--set-key`, `--reconfigure`, `--remove`).
 
 `codex-fugu` runs `codex -p fugu` and, at most once an hour, checks this repo for config updates and offers to apply them. It never blocks launch, and any arguments you pass go straight to Codex.
 
@@ -85,7 +120,9 @@ codex-fugu --no-update resume      # skip the update check, then resume
 
 Because forwarding starts at the first non-launcher argument, put any launcher flag before the Codex arguments. Plain Codex flags such as `--model` or `--help` pass straight through, since the launcher only reacts to its own flags listed above.
 
-## Codex version management and session resume
+## Version management and session resume
+
+### Codex (`codex-fugu`)
 
 `codex-fugu` and the installer also manage your Codex version. The Fugu configs are verified against a specific Codex version, so on a mismatch the installer offers to switch your Codex binary to that version, and the launcher offers the same reconcile at most once an hour. A switch happens only with your consent, either an interactive yes or `--force`.
 
@@ -97,7 +134,19 @@ Before any switch the installer saves your current session index (the `state`, `
 cp -p ~/.codex-backups/codex-config-<timestamp>/*.sqlite* ~/.codex/
 ```
 
+### Claude Code (`claude-fugu`)
+
+`claude-fugu` does not manage the Claude Code version or touch session state. It checks only that `claude` is on your `PATH` (and exits with an install hint if it is not), then execs Claude Code. It never pins or checks the Claude Code version, runs no update check, and keeps no session index; Claude Code manages its own `/model` selection and session resume, so there is no version-switch resume caveat like Codex's.
+
+Because the launcher does not auto-update, you pick up new Fugu support for Claude Code (such as new Fugu models) by re-running the installer, which reinstalls the launcher:
+
+```bash
+bash ~/.fugu/scripts/install-claude.sh
+```
+
 ## Config backup, restore, and protection
+
+### Codex (`install.sh`)
 
 Before switching the Codex version or making its first edit to `config.toml`, the installer saves a timestamped copy of your existing config to `~/.codex-backups/codex-config-<timestamp>/`. This location sits outside `~/.codex`, so a backup survives even a full `rm -rf ~/.codex`. Each backup holds your `config.toml`, any `*.config.toml`, `auth.json`, other catalog `*.json`, and `*.md` files, the session index (`state`, `memories`, and `goals` `.sqlite` files), plus a `MANIFEST.txt` and a `SHA256SUMS` for verification. The 10 most recent backups are kept. Use `CODEX_BACKUP_KEEP` and `CODEX_BACKUP_ROOT` to change the count and location, or `--no-backup` to skip the step.
 
@@ -109,3 +158,9 @@ codex doctor   # expect: config.toml parse: ok
 ```
 
 Your provider settings go into `config.toml` inside managed `# >>> fugu:... >>>` markers, so a re-deploy replaces only that block and leaves the rest of your config untouched. After each edit the installer re-parses the file with `codex doctor`, and if it no longer parses, the change is rolled back automatically. The stored `auth.json` is kept at mode `0600` so your credentials stay private.
+
+### Claude Code (`claude-fugu`)
+
+The Claude path has no backup story because it changes no config on disk. `install-claude.sh` deploys no config bundle and never edits `~/.claude/settings.json` or any other Claude Code config; Claude Code is pointed at Fugu entirely through the `ANTHROPIC_*` environment variables the launcher sets at launch, so a shared `~/.claude` is never modified. The only file it writes is the API-key store `~/.claude/.fugu-env` (mode `0600`, in a `0700` directory). When that file already exists, only the `SAKANA_API_KEY` line is rewritten and any other lines are preserved. If no key is stored yet, an existing Codex key in `~/.codex/.env` is reused, read-only, and that file is never modified.
+
+Because nothing is backed up, there is no `--no-backup` flag and no restore step. `install-claude.sh --remove` deletes only the launcher and keeps the stored key, so delete `~/.claude/.fugu-env` by hand if you want to remove that too.

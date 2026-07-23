@@ -8,31 +8,39 @@
 
 [Sakana Fugu](https://sakana.ai/fugu/) is a multi-agent system delivered as one model. Fugu dynamically orchestrates frontier models to tackle complex, multi-step tasks. You can access the multi-agent system as a single LLM through the [Sakana API](https://console.sakana.ai/get-started), which supports both Chat Completions and Responses endpoints.
 
-To quickly get started, you can install Fugu into Codex with a single command:
+To quickly get started, you can install Fugu into Codex or Claude Code with a single command:
   
 ```bash
 curl -fsSL https://sakana.ai/fugu/install | bash
 ```
 
-Then launch it with:
+Then launch Codex with:
 
 ```bash
 codex-fugu
 ```
 
-See the [command reference](docs/commands_details.md) for additional flags and options. The one-line install supports Ubuntu and macOS. On Windows, or if the install does not complete, follow the guide [here](https://console.sakana.ai/get-started#manually-setting-up-codex).
+or Claude Code with:
+
+```bash
+claude-fugu
+```
+
+See the [command reference](docs/commands_details.md) for additional flags and options. The one-line install supports Ubuntu and macOS. On Windows, or if the install does not complete, set it up by hand: [Manually Setting Up Codex](https://console.sakana.ai/get-started#manually-setting-up-codex) for Codex, or [Manually Setting Up Claude Code](https://console.sakana.ai/get-started#manually-setting-up-claude-code) for Claude Code.
+
+Because Claude Code is closed source, you may notice some (mostly cosmetic) compatibility differences with Fugu. See [Compatibility with Claude Code](https://console.sakana.ai/get-started#compatibility-with-claude-code). The `claude-fugu` launcher does not auto-update, so to pick up the latest Fugu support for Claude Code (such as new Fugu models), re-run the install, or redeploy the configs as in [Manually Setting Up Claude Code](https://console.sakana.ai/get-started#manually-setting-up-claude-code).
 
 <br clear="all">
 
 ## Superior performance via intelligent coordination
 
-Sakana Fugu achieves superior performance by dynamically coordinating and orchestrating a diverse pool of powerful models. For evaluation details, check [our technical report](https://arxiv.org/abs/2606.21228).
+Sakana Fugu achieves superior performance by dynamically coordinating and orchestrating a diverse pool of powerful models. For evaluation details, check [our technical report](Fugu_technical_report.pdf).
 
 <p align="center">
   <img src="assets/figures/performance_1.png" alt="Sakana Fugu performance" width="820">
 </p>
 
-These results reflect our June 2026 evaluation. As new frontier models are released, we continuously update our model pool and retrain our coordinators to maintain Fugu's performance advantage.
+These results reflect our June 2026 evaluation. As new frontier models are released, we continuously update our model pool and retrain our coordinators to maintain Fugu's performance advantage. For the latest Fugu models and their evaluation results, see our [blog posts](https://sakana.ai/blog/).
 
 ## Sakana Fugu in action
 
@@ -64,7 +72,7 @@ Sakana Fugu is based on two papers published in ICLR 2026.
   </tr>
 </table>
 
-Since publication, we have made several enhancements. The full technical report is available [here](https://arxiv.org/abs/2606.21228).
+Since publication, we have made several enhancements. The full technical report is available [here](Fugu_technical_report.pdf).
 
 
 ## Support
