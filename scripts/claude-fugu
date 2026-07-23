@@ -1,0 +1,40 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+KEY_REGEX='^fish_[0-9a-f]{64}$'
+ENV_FILE="${CLAUDE_FUGU_ENV_FILE:-$HOME/.claude/.fugu-env}"
+CODEX_ENV_FILE="${FUGU_ENV_FILE:-${CODEX_HOME:-$HOME/.codex}/.env}"
+
+for f in "$ENV_FILE" "$CODEX_ENV_FILE"; do
+  [ -n "${SAKANA_API_KEY:-}" ] && break
+  [ -f "$f" ] && . "$f" 2>/dev/null || true
+done
+
+if [ -z "${SAKANA_API_KEY:-}" ]; then
+  printf 'A Sakana API key is required. Get one here: https://console.sakana.ai/api-keys\n' >&2
+  printf 'Paste your SAKANA_API_KEY (input hidden): ' >&2
+  IFS= read -rs SAKANA_API_KEY; printf '\n' >&2
+  SAKANA_API_KEY="$(printf '%s' "$SAKANA_API_KEY" | tr -d '[:space:]')"
+  if ! printf '%s' "$SAKANA_API_KEY" | grep -qE "$KEY_REGEX"; then
+    printf 'That does not look like a valid SAKANA_API_KEY.\n' >&2; exit 1
+  fi
+  mkdir -p "$(dirname "$ENV_FILE")"
+  (umask 077; printf 'SAKANA_API_KEY=%s\n' "$SAKANA_API_KEY" > "$ENV_FILE")
+  printf 'Saved SAKANA_API_KEY to %s (0600).\n' "$ENV_FILE" >&2
+fi
+
+command -v claude >/dev/null 2>&1 || { printf 'claude not found on PATH; install Claude Code first: https://claude.com/claude-code\n' >&2; exit 127; }
+
+exec env \
+  ANTHROPIC_BASE_URL="https://api.sakana.ai" \
+  ANTHROPIC_AUTH_TOKEN="$SAKANA_API_KEY" \
+  ANTHROPIC_DEFAULT_FABLE_MODEL="fugu-cyber[1m]" \
+  ANTHROPIC_DEFAULT_FABLE_MODEL_DESCRIPTION="Cybersecurity-focused model" \
+  ANTHROPIC_DEFAULT_OPUS_MODEL="fugu-ultra[1m]" \
+  ANTHROPIC_DEFAULT_OPUS_MODEL_DESCRIPTION="Highest-capability model for complex, challenging tasks" \
+  ANTHROPIC_DEFAULT_SONNET_MODEL="fugu[1m]" \
+  ANTHROPIC_DEFAULT_SONNET_MODEL_DESCRIPTION="General-purpose model for everyday tasks" \
+  ANTHROPIC_DEFAULT_HAIKU_MODEL="fugu[1m]" \
+  ANTHROPIC_DEFAULT_HAIKU_MODEL_DESCRIPTION="Same as the other fugu[1m]" \
+  CLAUDE_CODE_SUBAGENT_MODEL="fugu[1m]" \
+  claude "$@"
